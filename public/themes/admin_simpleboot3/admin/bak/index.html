@@ -1,0 +1,40 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>备份列表</a></li>
+    </ul>
+
+    <table class="table table-hover table-bordered margin-top-20">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>备份名称</th>
+            <th>备份时间</th>
+            <th>备份大小</th>
+            <th>操作 <a href="{:url('Bak/index',array('tp'=>'backup'))}" class="btn btn-info btn-sm js-ajax-dialog-btn">添加备份</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo" key="i">
+            <tr>
+                <th scope="row">{$i}</th>
+                <td>{$vo.name}</td>
+                <td>{$vo.time}</td>
+                <td>{$vo.size}</td>
+                <td>
+                    <a href="{:url('Bak/index',array('tp'=>'dowonload','name'=>$vo.name))}" class="btn btn-primary btn-sm">下载</a>
+                    <a href="{:url('Bak/index',array('tp'=>'restore','name'=>$vo.name))}" class="btn btn-warning btn-sm js-ajax-dialog-btn"
+                       data-msg="确定还原吗？">还原</a>
+                    <a href="{:url('Bak/index',array('tp'=>'del','name'=>$vo.name))}" class="btn btn-danger btn-sm js-ajax-dialog-btn"
+                       data-msg="确定删除吗？">删除</a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

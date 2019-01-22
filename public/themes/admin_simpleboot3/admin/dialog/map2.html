@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <style type="text/css">
+        html,body{
+            width:100%;
+            height:100%;
+        }
+        *{
+            margin:0px;
+            padding:0px;
+        }
+        body, button, input, select, textarea {
+            font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
+        }
+        p{
+            width:603px;
+            padding-top:3px;
+            overflow:hidden;
+        }
+        #container{
+            min-width:600px;
+            min-height:767px;
+        }
+        .btn{
+            width:142px;
+        }
+    </style>
+    <title>点击地图获取当前经纬度</title>
+</head>
+<body>
+
+<input style="width:200px;padding:3px 4px;" type="text" id="place"  placeholder="请输入地址"/>
+<input style="width:200px;padding:3px 4px;" type="text" id="address_input" value="" placeholder="腾讯地址">
+<input style="width:120px;padding:3px 4px;" id="lng_input" type="number" value="{$lng}" placeholder="经度"/>
+<input style="width:120px;padding:3px 4px;" id="lat_input" type="number" value="{$lat}" placeholder="纬度"/>
+<input id="city_input" type="hidden"/>
+<input id="province_input" type="hidden"/>
+<input id="district_input" type="hidden"/>
+
+<div id="container"></div>
+<script>
+
+    var markersArray = [];
+    var searchService,markers = [];
+
+    function init() {
+        //设置地图中心点
+        var myLatlng = new qq.maps.LatLng({$lat}, {$lng});
+        //定义工厂模式函数
+        var myOptions = {
+            zoom: 16,               //设置地图缩放级别
+            center: myLatlng,      //设置中心点样式
+            mapTypeId: qq.maps.MapTypeId.ROADMAP  //设置地图样式详情参见MapType
+        }
+
+        //获取dom元素添加地图信息
+        var map = new qq.maps.Map(document.getElementById("container"), myOptions);
+
+        //实例化自动完成
+        var ap = new qq.maps.place.Autocomplete(document.getElementById('place'));
+        //设置Poi检索服务，用于本地检索、周边检索
+        searchService = new qq.maps.SearchService({
+            //检索成功的回调函数
+            complete: function(results) {
+                //设置回调函数参数
+                var pois = results.detail.pois;
+                var infoWin = new qq.maps.InfoWindow({
+                    map: map
+                });
+                var latlngBounds = new qq.maps.LatLngBounds();
+                for (var i = 0, l = pois.length; i < l; i++) {
+                    var poi = pois[i];
+                    //扩展边界范围，用来包含搜索到的Poi点
+                    latlngBounds.extend(poi.latLng);
+
+                    (function(n) {
+                        var marker = new qq.maps.Marker({
+                            map: map
+                        });
+                        marker.setPosition(pois[n].latLng);
+
+                        marker.setTitle(i + 1);
+                        markers.push(marker);
+                        qq.maps.event.addListener(marker, 'click', function() {
+                            infoWin.open();
+                            infoWin.setContent('<div style="width:280px;height:80px;">名称：' + pois[n].name + '<br/><br/>地址：' + pois[n].address +  '</div>');
+                            infoWin.setPosition(pois[n].latLng);
+                            document.getElementById('address_input').value=pois[n].address;
+                            document.getElementById('lng_input').value=pois[n].latLng.lng;
+                            document.getElementById('lat_input').value=pois[n].latLng.lat;
+                        });
+                    })(i);
+                }
+                //调整地图视野
+                map.fitBounds(latlngBounds);
+            },
+            //若服务请求失败，则运行以下函数
+            error: function() {
+                alert("出错了。");
+            }
+        });
+        //添加监听事件
+        qq.maps.event.addListener(ap, "confirm", function(res){
+            clearOverlays(markers);
+            searchService.search(res.value);
+        });
+
+        geocoder = new qq.maps.Geocoder({
+            complete : function(result){
+                document.getElementById('address_input').value=result.detail.address;
+                document.getElementById('province_input').value=result.detail.addressComponents.province;
+                document.getElementById('city_input').value=result.detail.addressComponents.city;
+                document.getElementById('district_input').value=result.detail.addressComponents.district;
+            }
+        });
+        geocoder.getAddress(myLatlng);
+
+        var marker = new qq.maps.Marker({
+            position: myLatlng,
+            map: map
+        });
+        markersArray.push(marker);
+
+        var listener=qq.maps.event.addListener(map, 'click', function(event) {
+            deleteOverlays();
+            var myLatlng = new qq.maps.LatLng(event.latLng.getLat(),event.latLng.getLng());
+            var marker = new qq.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
+            geocoder.getAddress(myLatlng);
+            markersArray.push(marker);
+            var lng=event.latLng.getLng();
+            var lat=event.latLng.getLat();
+            document.getElementById('lng_input').value=lng.toFixed(6);
+            document.getElementById('lat_input').value=lat.toFixed(6);
+        });
+
+    }
+
+    function deleteOverlays() {
+        if (markersArray) {
+            for (i in markersArray) {
+                markersArray[i].setMap(null);
+            }
+            markersArray.length = 0;
+        }
+    }
+
+    //清除地图上的marker
+    function clearOverlays(overlays) {
+        var overlay;
+        while (overlay = overlays.pop()) {
+            overlay.setMap(null);
+        }
+    }
+
+    //异步加载地图库函数文件
+    function loadScript() {
+        //创建script标签
+        var script = document.createElement("script");
+        //设置标签的type属性
+        script.type = "text/javascript";
+        //设置标签的链接地址
+        script.src = "https://map.qq.com/api/js?v=2.exp&callback=init&libraries=place";
+        //添加标签到dom
+        document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;    // dom文档加载结束开始加载 此段代码
+
+    function confirm() {
+        var data      = {};
+        data.lng      = document.getElementById("lng_input").value;
+        data.lat      = document.getElementById("lat_input").value;
+        data.address  = document.getElementById("address_input").value;
+        data.city     = document.getElementById("city_input").value;
+        data.province = document.getElementById("province_input").value;
+        data.district = document.getElementById("district_input").value;
+        return data;
+    }
+</script>
+
+</body>
+</html>

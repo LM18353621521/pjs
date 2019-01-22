@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>微信支付成功</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/lanren.css">
+</head>
+<body >
+<div class="zfcg_box ">
+    <div class="all_w">
+        <img src="__TMPL__/public/assets/images/cg_03.jpg" > 支付成功 </div>
+
+</div>
+<div class="cgzf_info">
+    <div class="wenx_xx">
+        <div class="mz">{$site_info.site_name|default='请定义商品名称'}</div>
+        <div class="wxzf_price">￥{$info.real_price|default='请定义商品金额'}</div>
+    </div>
+
+    <div class="spxx_shop">
+        <div class=" mlr_pm">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>交易时间</td>
+                    <td align="right">{$info.pay_time|date='Y-m-d H:i:s',###}</td>
+                </tr>
+                <tr>
+                    <td>商户单号</td>
+                    <td align="right">{$info.order_sn|default='请定义商户单号'}</td>
+                </tr>
+                <tr>
+                    <td>交易单号</td>
+                    <td align="right">{$info.transaction_id|default='请定义交易单号'}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="wzxfcgde_tb"><img src="__TMPL__/public/assets/images/cg_07.jpg" ></div>
+</body>
+</html>

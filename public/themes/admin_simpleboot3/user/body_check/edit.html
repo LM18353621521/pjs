@@ -1,0 +1,97 @@
+<include file="public@header"/>
+<script src="__STATIC__/js/laydate/laydate.js"></script>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
+        <li><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
+        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
+        <li class="active"><a href="javascript:;">体格检查</a></li>
+        <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
+        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
+        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
+        <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+    </ul>
+    <ul class="nav nav-tabs" style="display: inline-block;">
+        <li ><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}">体格检查列表</a></li>
+        <li class="active"><a href="javascript:;">编辑体格检查</a></li>
+    </ul>
+    <form action="{:url('UserVisit/addPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <input type="hidden" name="user_id" value="{$user.id}">
+        <input type="hidden" name="id" value="{$data.id}">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="title" id="title" required value="{$data.title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">随访时间<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="visit_time" id="visit_time" required   value="{:date('Y-m-d H:i:s',$data['visit_time'])}" placeholder="请选择随访时间"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td>
+                            <textarea class="form-control" name="remark" style="height: 80px;"  placeholder="请填写备注">{$data.remark}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td>
+                            <script type="text/plain" id="content" name="content"></script>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('UserVisit/index',array('user_id'=>$user[id]))}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#visit_time', //指定元素
+            type: 'datetime'
+        });
+
+    });
+</script>
+</body>
+</html>

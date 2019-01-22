@@ -1,0 +1,175 @@
+<include file="public@header"/>
+</head>
+<!--<script src="__STATIC__/js/laydate/laydate.js"></script>-->
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
+        <li><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
+        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
+        <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
+        <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
+        <li class="active"><a href="javascript:;">影像学检查</a></li>
+        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
+        <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+    </ul>
+    <br>
+    <ul class="nav nav-tabs" style="display: inline-block;">
+        <li class="active"><a href="javascript:;">影像学检查列表</a></li>
+        <li ><a href="{:url('ImageCheck/add',array('user_id'=>$user[id]))}">添加影像学检查</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('user/ImageCheck/index')}">
+        标题：
+        <input class="form-control" type="text" name="title" style="width: 200px;" value="{:input('request.title')}"
+               placeholder="请输入标题">
+        创建时间：
+        <input class="form-control" type="text" name="start_time" id="start_time"    value="{:input('request.start_time')}" placeholder="开始时间"/>
+        <input class="form-control" type="text" name="end_time" id="end_time"    value="{:input('request.end_time')}" placeholder="结束时间"/>
+        <input type="hidden" name="user_id" value="{$user.id}">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('user/ImageCheck/index',array('user_id'=>$user[id]))}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <!--<button class="btn btn-primary btn-sm js-ajax-submit" type="submit"-->
+                    <!--data-action="{:url('AdminArticle/publish',array('yes'=>1))}" data-subcheck="true">发布-->
+            <!--</button>-->
+            <!--<button class="btn btn-primary btn-sm js-ajax-submit" type="submit"-->
+                    <!--data-action="{:url('AdminArticle/publish',array('no'=>1))}" data-subcheck="true">取消发布-->
+            <!--</button>-->
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"  data-action="{:url('ImageCheck/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th>ID</th>
+                <th>患者编号</th>
+                <th>患者姓名</th>
+                <th>随访标题</th>
+                <th>随访时间</th>
+                <th>创建时间</th>
+                <th>备注</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <php>
+                $user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));
+            </php>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$user.user_code}</td>
+                    <td>{$user[user_nickname]}</td>
+                    <td>{$vo.title}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo['visit_time'])}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                    <td>{$user_statuses[$vo['user_status']]}</td>
+                    <td>
+                        <a href="{:url('ImageCheck/edit',array('id'=>$vo['id']))}">编辑</a>
+                        <a href="{:url('ImageCheck/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="table-actions">
+            <!--<button class="btn btn-primary btn-sm js-ajax-submit" type="submit"-->
+                    <!--data-action="{:url('AdminArticle/publish',array('yes'=>1))}" data-subcheck="true">发布-->
+            <!--</button>-->
+            <!--<button class="btn btn-primary btn-sm js-ajax-submit" type="submit"-->
+                    <!--data-action="{:url('AdminArticle/publish',array('no'=>1))}" data-subcheck="true">取消发布-->
+            <!--</button>-->
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('ImageCheck/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    function reloadPage(win) {
+        win.location.reload();
+    }
+    $(function () {
+        setCookie("refersh_time", 0);
+        Wind.use('ajaxForm', 'artDialog', 'iframeTools', function () {
+            //批量复制
+            $('.js-articles-copy').click(function (e) {
+                var ids = [];
+                $("input[name='ids[]']").each(function () {
+                    if ($(this).is(':checked')) {
+                        ids.push($(this).val());
+                    }
+                });
+
+                if (ids.length == 0) {
+                    art.dialog.through({
+                        id: 'error',
+                        icon: 'error',
+                        content: '您没有勾选信息，无法进行操作！',
+                        cancelVal: '关闭',
+                        cancel: true
+                    });
+                    return false;
+                }
+
+                ids = ids.join(',');
+                art.dialog.open("__ROOT__/index.php?g=portal&m=AdminArticle&a=copy&ids=" + ids, {
+                    title: "批量复制",
+                    width: "300px"
+                });
+            });
+            //批量移动
+            $('.js-articles-move').click(function (e) {
+                var ids = [];
+                $("input[name='ids[]']").each(function () {
+                    if ($(this).is(':checked')) {
+                        ids.push($(this).val());
+                    }
+                });
+
+                if (ids.length == 0) {
+                    art.dialog.through({
+                        id: 'error',
+                        icon: 'error',
+                        content: '您没有勾选信息，无法进行操作！',
+                        cancelVal: '关闭',
+                        cancel: true
+                    });
+                    return false;
+                }
+
+                ids = ids.join(',');
+                art.dialog.open("__ROOT__/index.php?g=portal&m=AdminArticle&a=move&old_term_id={$term.term_id|default=0}&ids=" + ids, {
+                    title: "批量移动",
+                    width: "300px"
+                });
+            });
+        });
+    });
+
+//    //执行一个laydate实例
+//    laydate.render({
+//        elem: '#start_time' //指定元素
+//    });
+//    laydate.render({
+//        elem: '#end_time' //指定元素
+//    });
+</script>
+</body>
+</html>

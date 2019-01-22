@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>微信支付</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/lanren.css">
+    <script type="text/javascript">
+        //调用微信JS api 支付
+        function jsApiCall()
+        {
+            WeixinJSBridge.invoke(
+                "getBrandWCPayRequest",
+                {$jsApiParameters},
+                function(res){
+                    WeixinJSBridge.log(res.err_msg);
+                    alert(res.err_code+res.err_desc+res.err_msg);
+                    if (res.err_msg=='get_brand_wcpay_request:cancel'){
+                        //支付取消逻辑
+                    }else if (res.err_msg=='get_brand_wcpay_request:ok'){
+                        //支付成功逻辑
+                    }else{
+                        //支付失败逻辑
+                    }
+                }
+            );
+        }
+        function callpay()
+        {
+            if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                    document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                }else if (document.attachEvent){
+                    document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                    document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                }
+            }else{
+                jsApiCall();
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="wenx_xx">
+    <div class="mz">DEF0000000001</div>
+    <div class="wxzf_price">￥0.01</div>
+</div>
+<div class="skf_xinf">
+    <div class="all_w"> <span class="bt">收款方</span> <span class="fr">{$site_info.site_name}</span> </div>
+</div>
+<a onclick="callpay()" class="ljzf_but all_w">立即支付</a>
+<script type="text/javascript">
+    callpay();
+</script>
+</body>
+</html>

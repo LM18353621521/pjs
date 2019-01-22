@@ -1,0 +1,255 @@
+<include file="public@header"/>
+</head>
+<script src="__STATIC__/js/laydate/laydate.js"></script>
+<style>
+    .form-control {
+        display: inline-block;
+        width: auto;
+    }
+</style>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
+        <li class="active"><a href="javascript:;">基本资料</a></li>
+        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
+        <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
+        <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
+        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
+        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
+        <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" role="form" action="{:url('adminIndex/addPost')}"
+          method="post">
+        <input type="hidden" name="id" value="{$user.id}">
+        <fieldset>
+            <div class="tabbable">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="A">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>姓名<span class="form-required">*</span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_nickname" value="{$user.user_nickname}" id="user_nickname"
+                                           required value="" placeholder="请输入姓名"/>
+                                </td>
+                                <th>患者编号<span class="form-required">*</span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_code" value="{$user.user_code}" readonly  id="user_code" required
+                                           value="" placeholder="请输入用户编号"/>
+                                </td>
+                                <th>出生日期<span class="form-required">*</span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="birthday" value="{:date('Y-m-d',$user['birthday'])}"  id="birthday" required   value="" placeholder="请选择出生日期"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>性别<span class="form-required">*</span></th>
+                                <td>
+                                    <select class="form-control" name="sex" required>
+                                        <option value="1"  <eq name="user[sex]" value="1">selected</eq> >男</option>
+                                        <option value="2"  <eq name="user[sex]" value="2">selected</eq> >女</option>
+                                    </select>
+                                </td>
+                                <th>年龄<span class="form-required">*</span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="age" value="{$user.age}"  required placeholder="请输入标题"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>民族<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[nation]"  value="{$user_info.nation}" placeholder="请输入民族"/>
+                                </td>
+                                <th>国籍<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[country][radio]" value="1" <eq name="user_info[country][radio]" value="1">checked</eq> >中国
+                                    <input type="radio" name="user_info[country][radio]" value="2" <eq name="user_info[country][radio]" value="2">checked</eq> >其他
+                                    <input class="form-control" type="text" name="user_info[country][other]" value="{$user_info[country][other]}"  placeholder=""/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>文化程度<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[edu_degree]" value="1" <eq name="user_info[edu_degree]" value="1">checked</eq> >无
+                                    <input type="radio" name="user_info[edu_degree]" value="2" <eq name="user_info[edu_degree]" value="2">checked</eq> >小学
+                                    <input type="radio" name="user_info[edu_degree]" value="3" <eq name="user_info[edu_degree]" value="3">checked</eq> >初中
+                                    <input type="radio" name="user_info[edu_degree]" value="4" <eq name="user_info[edu_degree]" value="4">checked</eq> >高中及中专
+                                    <input type="radio" name="user_info[edu_degree]" value="5" <eq name="user_info[edu_degree]" value="5">checked</eq> >大学
+                                    <input type="radio" name="user_info[edu_degree]" value="6" <eq name="user_info[edu_degree]" value="6">checked</eq> >硕士及以上
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>家庭住址<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[address]" value="{$user_info.address}" placeholder="请输入"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>联系方式<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="mobile"   value="{$user.mobile}" placeholder="请输入"/>
+                                </td>
+                                <th>电子邮箱<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[email]" value="{$user_info.email}" placeholder="请输入"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>职业<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[occupation][radio]" value="1" <eq name="user_info[occupation][radio]" value="1">checked</eq> >工人
+                                    <input type="radio" name="user_info[occupation][radio]" value="2" <eq name="user_info[occupation][radio]" value="2">checked</eq> >教师
+                                    <input type="radio" name="user_info[occupation][radio]" value="3" <eq name="user_info[occupation][radio]" value="3">checked</eq> >农民
+                                    <input type="radio" name="user_info[occupation][radio]" value="4" <eq name="user_info[occupation][radio]" value="4">checked</eq> >干部
+                                    <input type="radio" name="user_info[occupation][radio]" value="5" <eq name="user_info[occupation][radio]" value="5">checked</eq> >学生
+                                    <input type="radio" name="user_info[occupation][radio]" value="6" <eq name="user_info[occupation][radio]" value="6">checked</eq> >职员
+                                    <input type="radio" name="user_info[occupation][radio]" value="7" <eq name="user_info[occupation][radio]" value="7">checked</eq> >退休
+                                    <input type="radio" name="user_info[occupation][radio]" value="8" <eq name="user_info[occupation][radio]" value="8">checked</eq> >其他
+                                    <input class="form-control" type="text" name="user_info[occupation][other]" value="{$user_info[occupation][other]}"  placeholder=""/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>婚姻状况<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[marriage]" value="1" <eq name="user_info[marriage]" value="1">checked</eq> >未婚
+                                    <input type="radio" name="user_info[marriage]" value="2" <eq name="user_info[marriage]" value="2">checked</eq> >已婚
+                                    <input type="radio" name="user_info[marriage]" value="3" <eq name="user_info[marriage]" value="3">checked</eq> >分居
+                                    <input type="radio" name="user_info[marriage]" value="4" <eq name="user_info[marriage]" value="4">checked</eq> >离异
+                                    <input type="radio" name="user_info[marriage]" value="5" <eq name="user_info[marriage]" value="5">checked</eq> >丧偶
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>经济状况<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[econom]" value="1"  <eq name="user_info[econom]" value="1">checked</eq> >富裕
+                                    <input type="radio" name="user_info[econom]" value="2"  <eq name="user_info[econom]" value="2">checked</eq> >较好
+                                    <input type="radio" name="user_info[econom]" value="3"  <eq name="user_info[econom]" value="3">checked</eq> >一般
+                                    <input type="radio" name="user_info[econom]" value="4"  <eq name="user_info[econom]" value="4">checked</eq> >较差
+                                    <input type="radio" name="user_info[econom]" value="5"  <eq name="user_info[econom]" value="5">checked</eq> >贫困
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>居住状况<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[live_status][radio]" value="1" <eq name="user_info[live_status][radio]" value="1">checked</eq> >独居
+                                    <input type="radio" name="user_info[live_status][radio]" value="2" <eq name="user_info[live_status][radio]" value="2">checked</eq> >与配偶居住
+                                    <input type="radio" name="user_info[live_status][radio]" value="3" <eq name="user_info[live_status][radio]" value="3">checked</eq> >与子女居住
+                                    <input type="radio" name="user_info[live_status][radio]" value="4" <eq name="user_info[live_status][radio]" value="4">checked</eq> >其他
+                                    <input class="form-control" type="text" name="user_info[live_status][other]"  value="{$user_info[live_status][other]}"  placeholder=""/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>吸烟史<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[smoking][radio]" value="1" <eq name="user_info[smoking][radio]" value="1">checked</eq> >无
+                                    <input type="radio" name="user_info[smoking][radio]" value="2" <eq name="user_info[smoking][radio]" value="2">checked</eq> >曾经吸引
+                                    <input type="radio" name="user_info[smoking][radio]" value="3" <eq name="user_info[smoking][radio]" value="3">checked</eq> >现在吸引
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>烟龄<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[smoking][year]" value="{$user_info[smoking][year]}"  placeholder=""/>
+                                    年
+                                    <input class="form-control" type="text" name="user_info[smoking][month]" value="{$user_info[smoking][month]}"  placeholder=""/>
+                                    月,
+                                    每天
+                                    <input class="form-control" type="text" name="user_info[smoking][day_num]" value="{$user_info[smoking][day_num]}"  placeholder=""/>
+                                    支
+                                </td>
+                                <th>戒烟时间<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[smoking][quit]" id="smoking_quit" value="{$user_info[smoking][quit]}"  placeholder=""/>
+                                </td>
+                            </tr>
+                            <tr>
+                            <th>饮酒史<span class="form-required"></span></th>
+                            <td>
+                                <input type="radio" name="user_info[drink_wine][radio]" value="1" <eq name="user_info[drink_wine][radio]" value="1">checked</eq> >无
+                                <input type="radio" name="user_info[drink_wine][radio]" value="2" <eq name="user_info[drink_wine][radio]" value="2">checked</eq> >曾经饮酒
+                                <input type="radio" name="user_info[drink_wine][radio]" value="3" <eq name="user_info[drink_wine][radio]" value="3">checked</eq> >现在饮酒
+                            </td>
+                        </tr>
+                            <tr>
+                                <th>酒龄<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[drink_wine][year]" value="{$user_info[drink_wine][year]}"   placeholder=""/>
+                                    年
+                                    <input class="form-control" type="text" name="user_info[drink_wine][month]" value="{$user_info[drink_wine][month]}"   placeholder=""/>
+                                    月,
+                                    种类及酒量
+                                    <input class="form-control" type="text" name="user_info[drink_wine][type-num]" value="{$user_info[drink_wine][type-num]}"   placeholder=""/>
+                                </td>
+                                <th>戒酒时间<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[drink_wine][quit]" id="drink_wine_quit" value="{$user_info[drink_wine][quit]}"   placeholder=""/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>饮咖啡史<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[drink_coffee][radio]" value="1" <eq name="user_info[drink_coffee][radio]" value="1">checked</eq> >无
+                                    <input type="radio" name="user_info[drink_coffee][radio]" value="2" <eq name="user_info[drink_coffee][radio]" value="2">checked</eq> >曾经饮酒
+                                    <input type="radio" name="user_info[drink_coffee][radio]" value="3" <eq name="user_info[drink_coffee][radio]" value="3">checked</eq> >现在饮酒
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>时间<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[drink_coffee][year]" value="{$user_info[drink_coffee][year]}"  placeholder=""/>
+                                    年
+                                    <input class="form-control" type="text" name="user_info[drink_coffee][month]" value="{$user_info[drink_coffee][month]}"  placeholder=""/>
+                                    月,
+                                    种类剂量
+                                    <input class="form-control" type="text" name="user_info[drink_coffee][type-num]" value="{$user_info[drink_coffee][type-num]}"  placeholder=""/>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="B">
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="C">
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#birthday' //指定元素
+    });
+    laydate.render({
+        elem: '#smoking_quit', //指定元素
+    });
+    laydate.render({
+        elem: '#drink_wine_quit' //指定元素
+    });
+</script>
+</body>
+</html>
