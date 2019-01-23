@@ -80,6 +80,33 @@ class MedicalHistoryController extends AdminBaseController
      */
     public function add()
     {
+        $disease_list = array(
+            '1'=>array(
+                'name'=>'高血压',
+                'radio'=>1,
+                's_age'=>1,
+                'drug_type'=>1,
+                'drug_year'=>1,
+                'blood'=>1,
+            ),
+            '2'=>array(
+                'name'=>'糖尿病',
+                'radio'=>1,
+                's_age'=>1,
+                'drug_type'=>1,
+                'drug_year'=>1,
+                'blood'=>0,
+            ),
+            '3'=>array(
+                'name'=>'精神疾病',
+                'radio'=>1,
+                's_age'=>0,
+                'drug_type'=>1,
+                'drug_year'=>1,
+                'blood'=>0,
+            ),
+        );
+        $this->assign('disease_list',$disease_list);
         return $this->fetch();
     }
 
@@ -101,6 +128,11 @@ class MedicalHistoryController extends AdminBaseController
         $model = Db::name('user_medical_history');
         if ($this->request->isPost()) {
             $data   = $this->request->param();
+            foreach($data as&$val){
+                if(is_array($val)){
+                    $val = serialize($val);
+                }
+            }
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -111,7 +143,7 @@ class MedicalHistoryController extends AdminBaseController
                 $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑病史(ID:".$data['id'].")");
-                $this->success('编辑成功!', url('MedicalHistory/index', ['id' =>  $data['user_id']]));
+                $this->success('编辑成功!', url('MedicalHistory/index', ['user_id' =>  $data['user_id']]));
             }
         }
 
@@ -125,6 +157,7 @@ class MedicalHistoryController extends AdminBaseController
         $model = Db::name('user_medical_history');
         $id = $this->request->param('id', 0, 'intval');
         $data = $model->find($id);
+        $data['content']= unserialize($data['content']);
         $this->assign('data', $data);
         return $this->fetch();
     }

@@ -101,6 +101,12 @@ class AssistCheckController extends AdminBaseController
         $model = Db::name('user_assist_check');
         if ($this->request->isPost()) {
             $data   = $this->request->param();
+
+            foreach($data as&$val){
+                if(is_array($val)){
+                    $val = serialize($val);
+                }
+            }
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -111,7 +117,7 @@ class AssistCheckController extends AdminBaseController
                 $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑辅助检查(ID:".$data['id'].")");
-                $this->success('编辑成功!', url('AssistCheck/index', ['id' => $res]));
+                $this->success('编辑成功!', url('AssistCheck/index',  ['user_id' => $data['user_id']]));
             }
         }
 
@@ -125,6 +131,12 @@ class AssistCheckController extends AdminBaseController
         $model = Db::name('user_assist_check');
         $id = $this->request->param('id', 0, 'intval');
         $data = $model->find($id);
+
+        $data['head'] = unserialize($data['head']);
+        $data['sleep'] = unserialize($data['sleep']);
+        $data['eeg'] = unserialize($data['eeg']);
+        $data['cardiokymography'] = unserialize($data['cardiokymography']);
+
         $this->assign('data', $data);
         return $this->fetch();
     }

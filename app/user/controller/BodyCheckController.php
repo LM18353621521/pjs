@@ -50,6 +50,7 @@ class BodyCheckController extends AdminBaseController
             $end_time = strtotime($request['end_time'])+86400;
             $where['create_time'] = array('between',[$start_time,$end_time]);
         }
+        $where['user_id'] = input('user_id');
 
         $keywordComplex = [];
         $usersQuery = Db::name('user_body_check');
@@ -100,6 +101,12 @@ class BodyCheckController extends AdminBaseController
         $model = Db::name('user_body_check');
         if ($this->request->isPost()) {
             $data   = $this->request->param();
+
+            foreach($data as&$val){
+                if(is_array($val)){
+                    $val = serialize($val);
+                }
+            }
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -110,7 +117,7 @@ class BodyCheckController extends AdminBaseController
                 $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑病史(ID:".$data['id'].")");
-                $this->success('编辑成功!', url('BodyCheck/index', ['id' => $res]));
+                $this->success('编辑成功!', url('BodyCheck/index', ['user_id' => $data['user_id']]));
             }
         }
 
@@ -124,6 +131,8 @@ class BodyCheckController extends AdminBaseController
         $model = Db::name('user_body_check');
         $id = $this->request->param('id', 0, 'intval');
         $data = $model->find($id);
+        $data['sign'] = unserialize($data['sign']);
+        $data['nerve'] = unserialize($data['nerve']);
         $this->assign('data', $data);
         return $this->fetch();
     }

@@ -4,17 +4,41 @@
     .pic-list li {
         margin-bottom: 5px;
     }
+
+    .form-control {
+        display: inherit;
+        width: 80%;
+    }
 </style>
 </head>
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
-        <li ><a href="{:url('UserVisit/index',array('user_id'=>$user[id]))}">随访列表</a></li>
-        <li class="active"><a href="javascript:;">添加随访</a></li>
+        <li><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
+        <li class="active"><a href="javascript:;">既往病史</a></li>
+        <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
+        <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
+        <li><a href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}" >化验检查</a></li>
+        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
+        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
+        <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
     </ul>
+    <br>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th width="200">姓名：{$user.user_nickname}</th>
+            <th width="120">编号：{$user.user_code}</th>
+            <th width="100">性别：<if condition="$user.sex eq 1">男<else/>女</if></th>
+            <th width="100">年龄：{$user.age}</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <br>
     <ul class="nav nav-tabs" style="display: inline-block;">
-        <li ><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}">病史列表</a></li>
+        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}">病史列表</a></li>
         <li class="active"><a href="javascript:;">添加病史</a></li>
     </ul>
     <form action="{:url('MedicalHistory/addPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
@@ -23,17 +47,188 @@
             <div class="col-md-9">
                 <table class="table table-bordered">
                     <tr>
-                        <th width="100">标题<span class="form-required">*</span></th>
+                        <th width="100">高血压<span class="form-required"></span></th>
                         <td>
-                            <input class="form-control" type="text" id="title" required value="" placeholder="请输入标题"/>
+                            <input type="radio" name="content[disease1][radio]" value="1">有
+                            <input type="radio" name="content[disease1][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease1][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                        <td>
+                            服药种类 <input class="form-control" type="text" name="content[disease1][drug_type]" value=""
+                                        placeholder="请输入"/>
+                        </td>
+                        <td>
+                            服药时长 <input class="form-control" type="text" name="content[disease1][drug_year]" value=""
+                                        placeholder="请输入"/>年
+                        </td>
+                        <td>
+                            血压控制：
+                            <input type="radio" name="content[disease1][blood]" value="1">好 &nbsp;
+                            <input type="radio" name="content[disease1][blood]" value="2">一般 &nbsp;
+                            <input type="radio" name="content[disease1][blood]" value="3">不好 &nbsp;
                         </td>
                     </tr>
                     <tr>
-                        <th>备注</th>
+                        <th width="100">糖尿病<span class="form-required"></span></th>
                         <td>
-                            <textarea class="form-control"  style="height: 80px;"  placeholder="请填写备注"></textarea>
+                            <input type="radio" name="content[disease2][radio]" value="1">有
+                            <input type="radio" name="content[disease2][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease2][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                        <td>
+                            服药种类 <input class="form-control" type="text" name="content[disease2][drug_type]" value=""
+                                        placeholder="请输入"/>
+                        </td>
+                        <td>
+                            服药时长 <input class="form-control" type="text" name="content[disease2][drug_year]" value=""
+                                        placeholder="请输入"/>年
                         </td>
                     </tr>
+
+                    <tr>
+                        <th width="100">精神疾病<span class="form-required"></span></th>
+                        <td>
+                            <input type="radio" name="content[disease3][radio]" value="1">有
+                            <input type="radio" name="content[disease3][radio]" value="2">无
+                        </td>
+                        <td>
+                            种类：
+                            <input type="radio" name="content[disease3][type]" value="1">焦虑 &nbsp;
+                            <input type="radio" name="content[disease3][type]" value="2">抑郁 &nbsp;
+                            <input type="radio" name="content[disease3][type]" value="3">精神分裂 &nbsp;
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease3][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                        <td>
+                            服药种类 <input class="form-control" type="text" name="content[disease3][drug_type]" value=""
+                                        placeholder="请输入"/>
+                        </td>
+                        <td>
+                            服药时长 <input class="form-control" type="text" name="content[disease3][drug_year]" value=""
+                                        placeholder="请输入"/>年
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">脑梗死<span class="form-required"></span></th>
+                        <td>
+                            <input type="radio" name="content[disease4][radio]" value="1">有
+                            <input type="radio" name="content[disease4][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease4][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">脑出血<span class="form-required"></span></th>
+                        <td>
+                            <input type="radio" name="content[disease5][radio]" value="1">有
+                            <input type="radio" name="content[disease5][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease5][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">脑外伤<span class="form-required"></span></th>
+                        <td>
+                            <input type="radio" name="content[disease6][radio]" value="1">有
+                            <input type="radio" name="content[disease6][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease6][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                        <td>
+                            昏迷：
+                            <input type="radio" name="content[disease6][type]" value="1">有 &nbsp;
+                            <input type="radio" name="content[disease6][type]" value="2">无 &nbsp;
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">CO中毒<span class="form-required"></span></th>
+                        <td>
+                            <input type="radio" name="content[disease7][radio]" value="1">有
+                            <input type="radio" name="content[disease7][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease7][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                        <td>
+                            昏迷：
+                            <input type="radio" name="content[disease7][type]" value="1">有 &nbsp;
+                            <input type="radio" name="content[disease7][type]" value="2">无 &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">肿瘤<span class="form-required"></span></th>
+                        <td>
+                            <input type="radio" name="content[disease8][radio]" value="1">有
+                            <input type="radio" name="content[disease8][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease8][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                        <td>
+                            种类：
+                            <input type="text" name="content[disease8][type]" value="">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">癫痫<span class="form-required"></span></th>
+                        <td>
+                            <input type="radio" name="content[disease3][radio]" value="1">有
+                            <input type="radio" name="content[disease3][radio]" value="2">无
+                        </td>
+                        <td>
+                            开始年龄 <input class="form-control" type="text" name="content[disease3][s_age]" value=""
+                                        placeholder="请输入"/>岁
+                        </td>
+                        <td>
+                            服药种类 <input class="form-control" type="text" name="content[disease3][drug_type]" value=""
+                                        placeholder="请输入"/>
+                        </td>
+                        <td>
+                            服药时长 <input class="form-control" type="text" name="content[disease3][drug_year]" value=""
+                                        placeholder="请输入"/>年
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th width="100">其他疾病外伤、手术、骨折：<span class="form-required"></span></th>
+                        <td colspan="3">
+                            <textarea name="content[other]"  class="form-control" style="height: 80px;" placeholder="请填写备注"></textarea>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th width="100">备注<span class="form-required"></span></th>
+                        <td colspan="3">
+                            <textarea name="remark"  class="form-control" style="height: 80px;" placeholder="请填写备注"></textarea>
+                        </td>
+                    </tr>
+
                 </table>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">

@@ -116,6 +116,36 @@ class AdminIndexController extends AdminBaseController
         $user_code = Db::name('user')->max('user_code');
         $user_code=$user_code>=10000?($user_code+1):10000;
         $this->assign('user_code',$user_code);
+
+        $poisonList = array(
+            'poison0'=>'奋乃静',
+            'poison1'=>'盐酸硫利哒嗪',
+            'poison2'=>'氯丙嗪',
+            'poison3'=>'三氟拉嗪',
+            'poison4'=>'氟哌啶醇',
+            'poison5'=>'氟哌利多',
+            'poison6'=>'利血平',
+            'poison7'=>'甲氧氯普胺',
+            'poison8'=>'α-甲基多巴',
+            'poison9'=>'锂剂',
+            'poison10'=>'氟桂利嗪',
+            'poison11'=>'桂利嗪级',
+        );
+        $this->assign('poisonList',$poisonList);
+
+        $other_disease_list = array(
+            '1'=>'高血压',
+            '2'=>'糖尿病',
+            '3'=>'高脂血症',
+            '4'=>'脑出血',
+            '5'=>'脑梗死',
+            '6'=>'血管性痴呆',
+            '7'=>'骨关节病',
+            '8'=>'性肺病',
+            '9'=>'其他',
+        );
+        $this->assign('other_disease_list',$other_disease_list);
+
         return $this->fetch();
     }
 
@@ -168,7 +198,7 @@ class AdminIndexController extends AdminBaseController
 
     public function edit()
     {
-        $user_id = $this->request->param('id', 0, 'intval');
+        $user_id = $this->request->param('user_id', 0, 'intval');
         $user_model = Db::name('user');
         $user =$user_model->where(array('id'=>$user_id))->find();
         $user_info = Db::name('user_info')->where(array('user_id'=>$user_id))->find();
@@ -179,7 +209,40 @@ class AdminIndexController extends AdminBaseController
         $user_info['smoking'] = unserialize($user_info['smoking']);
         $user_info['drink_wine'] = unserialize($user_info['drink_wine']);
         $user_info['drink_coffee'] = unserialize($user_info['drink_coffee']);
+        $user_info['drink_tea'] = unserialize($user_info['drink_tea']);
+        $user_info['poison'] = unserialize($user_info['poison']);
+        $user_info['special_poison'] = unserialize($user_info['special_poison']);
+        $user_info['vital_sign'] = unserialize($user_info['vital_sign']);
+        $user_info['family'] = unserialize($user_info['family']);
 
+        $poisonList = array(
+            'poison0'=>'奋乃静',
+            'poison1'=>'盐酸硫利哒嗪',
+            'poison2'=>'氯丙嗪',
+            'poison3'=>'三氟拉嗪',
+            'poison4'=>'氟哌啶醇',
+            'poison5'=>'氟哌利多',
+            'poison6'=>'利血平',
+            'poison7'=>'甲氧氯普胺',
+            'poison8'=>'α-甲基多巴',
+            'poison9'=>'锂剂',
+            'poison10'=>'氟桂利嗪',
+            'poison11'=>'桂利嗪级',
+        );
+        $this->assign('poisonList',$poisonList);
+
+        $other_disease_list = array(
+            '1'=>'高血压',
+            '2'=>'糖尿病',
+            '3'=>'高脂血症',
+            '4'=>'脑出血',
+            '5'=>'脑梗死',
+            '6'=>'血管性痴呆',
+            '7'=>'骨关节病',
+            '8'=>'性肺病',
+            '9'=>'其他',
+        );
+        $this->assign('other_disease_list',$other_disease_list);
         $this->assign('user',$user);
         $this->assign('user_info',$user_info);
         return $this->fetch();

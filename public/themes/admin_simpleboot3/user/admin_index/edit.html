@@ -15,6 +15,7 @@
         <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
         <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
         <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
+        <li><a href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}" >化验检查</a></li>
         <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
         <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
         <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
@@ -179,7 +180,7 @@
                                     <input class="form-control" type="text" name="user_info[drink_wine][month]" value="{$user_info[drink_wine][month]}"   placeholder=""/>
                                     月,
                                     种类及酒量
-                                    <input class="form-control" type="text" name="user_info[drink_wine][type-num]" value="{$user_info[drink_wine][type-num]}"   placeholder=""/>
+                                    <input class="form-control" type="text" name="user_info[drink_wine][type_num]" value="{$user_info[drink_wine][type_num]}"   placeholder=""/>
                                 </td>
                                 <th>戒酒时间<span class="form-required"></span></th>
                                 <td>
@@ -190,9 +191,7 @@
                                 <th>饮咖啡史<span class="form-required"></span></th>
                                 <td>
                                     <input type="radio" name="user_info[drink_coffee][radio]" value="1" <eq name="user_info[drink_coffee][radio]" value="1">checked</eq> >无
-                                    <input type="radio" name="user_info[drink_coffee][radio]" value="2" <eq name="user_info[drink_coffee][radio]" value="2">checked</eq> >曾经饮酒
-                                    <input type="radio" name="user_info[drink_coffee][radio]" value="3" <eq name="user_info[drink_coffee][radio]" value="3">checked</eq> >现在饮酒
-                                </td>
+                                    <input type="radio" name="user_info[drink_coffee][radio]" value="2" <eq name="user_info[drink_coffee][radio]" value="2">checked</eq> >经常饮用</td>
                             </tr>
                             <tr>
                                 <th>时间<span class="form-required"></span></th>
@@ -202,28 +201,172 @@
                                     <input class="form-control" type="text" name="user_info[drink_coffee][month]" value="{$user_info[drink_coffee][month]}"  placeholder=""/>
                                     月,
                                     种类剂量
-                                    <input class="form-control" type="text" name="user_info[drink_coffee][type-num]" value="{$user_info[drink_coffee][type-num]}"  placeholder=""/>
+                                    <input class="form-control" type="text" name="user_info[drink_coffee][type_num]" value="{$user_info[drink_coffee][type_num]}"  placeholder=""/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>饮茶史<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[drink_tea][radio]" value="1" <eq name="user_info[drink_tea][radio]" value="1">checked</eq>>无
+                                    <input type="radio" name="user_info[drink_tea][radio]" value="2" <eq name="user_info[drink_tea][radio]" value="2">checked</eq>>经常饮用
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>时间<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[drink_tea][year]" value="{$user_info[drink_tea][year]}"   placeholder=""/>
+                                    年
+                                    <input class="form-control" type="text" name="user_info[drink_tea][month]" value="{$user_info[drink_tea][month]}"   placeholder=""/>
+                                    月,
+                                    种类剂量
+                                    <input class="form-control" type="text" name="user_info[drink_tea][type_num]" value="{$user_info[drink_tea][type_num]}"   placeholder=""/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>毒物接触史<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[poison][radio]" value="1" <eq name="user_info[poison][radio]" value="1">checked</eq>>有 &nbsp;
+                                    <input type="radio" name="user_info[poison][radio]" value="2" <eq name="user_info[poison][radio]" value="2">checked</eq>>无
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    （农药、重金属等）
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>时间<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[poison][year]" value="{$user_info[poison][year]}"    placeholder=""/>
+                                    年
+                                    <input class="form-control" type="text" name="user_info[poison][month]" value="{$user_info[poison][month]}"    placeholder=""/>
+                                    月,
+                                    种类剂量
+                                    <input class="form-control" type="text" name="user_info[poison][type_num]" value="{$user_info[poison][type_num]}"    placeholder=""/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>特殊药物使用<span class="form-required"></span></th>
+                                <td>
+                                    <input type="radio" name="user_info[special_poison][radio]" value="1" <eq name="user_info[special_poison][radio]" value="1">checked</eq> >有
+                                    <input type="radio" name="user_info[special_poison][radio]" value="2" <eq name="user_info[special_poison][radio]" value="2">checked</eq> >无
+                                </td>
+                            </tr>
+
+                            <foreach name="poisonList" item="vo" key="k">
+                                <tr>
+                                    <th>{$vo}<span class="form-required"></span></th>
+                                    <td>
+                                        起始时间
+                                        <input class="form-control" type="text" id="{$k}" name="user_info[special_poison][date][{$k}]" value="{$user_info[special_poison][date][$k]}"  placeholder=""/>
+                                    </td>
+                                    <td>
+                                        种类剂量
+                                        <input class="form-control" type="text" name="user_info[special_poison][type_num][{$k}]" value="{$user_info[special_poison][type_num][$k]}"  placeholder=""/>
+                                    </td>
+                                </tr>
+                                <script>
+                                    laydate.render({
+                                        elem: '#{$k}', //指定元素
+                                    });
+                                </script>
+                            </foreach>
+
+                            <tr>
+                                <th>其他<span class="form-required"></span></th>
+                                <td>
+                                    起始时间
+                                    <input class="form-control" type="text" id="sp_other" name="user_info[special_poison][date][sp_other]" value="{$user_info[special_poison][date][sp_other]}"  placeholder=""/>
+                                </td>
+                                <td>
+                                    种类剂量
+                                    <input class="form-control" type="text" name="user_info[special_poison][type_num][sp_other]" value="{$user_info[special_poison][type_num][sp_other]}"  placeholder=""/>
+                                </td>
+                            </tr>
+                            <script>
+                                laydate.render({
+                                    elem: '#sp_other', //指定元素
+                                });
+                            </script>
+
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>2. 生命体征</thead>
+                            <tr>
+                                <th>体重<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[vital_sign][weight]"  value="{$user_info[vital_sign][weight]}"   placeholder="请输入"/>kg
+                                </td>
+                                <th>身高<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[vital_sign][height]"  value="{$user_info[vital_sign][height]}"   placeholder="请输入"/>cm
+                                </td>
+                                <th>呼吸<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[vital_sign][breath]" value="{$user_info[vital_sign][breath]}"   placeholder="请输入"/>次/分
+                                </td>
+                                <th>体温<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[vital_sign][temperature]"   value="{$user_info[vital_sign][temperature]}"   placeholder="请输入"/>℃
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>血压<span class="form-required"></span></th>
+                                <td>
+                                    卧位
+                                    <input class="form-control" type="text" name="user_info[vital_sign][sp1]"   value="{$user_info[vital_sign][sp1]}"   placeholder="请输入"/>mmHg
+                                </td>
+                                <td>
+                                    立位
+                                    <input class="form-control" type="text" name="user_info[vital_sign][sp2]"   value="{$user_info[vital_sign][sp2]}"   placeholder="请输入"/>mmHg
+                                </td>
+                                <td>
+                                    脉搏
+                                    <input class="form-control" type="text" name="user_info[vital_sign][pulse]"   value="{$user_info[vital_sign][pulse]}"   placeholder="请输入"/>次/分
+                                </td>
+                                <td>
+                                    卧位
+                                    <input class="form-control" type="text" name="user_info[vital_sign][heartrate]"   value="{$user_info[vital_sign][heartrate]}"   placeholder="请输入"/>次/分
+                                </td>
+                                <td>
+                                    心率
+                                    <input  type="radio" name="user_info[vital_sign][heartrhythm]"  value="1" <eq name="user_info[vital_sign][heartrhythm]" value="1">checked</eq> />齐
+                                    <input  type="radio" name="user_info[vital_sign][heartrhythm]"   value="2" <eq name="user_info[vital_sign][heartrhythm]" value="2">checked</eq>  />不齐
                                 </td>
                             </tr>
                         </table>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
-                                    {:lang('SAVE')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="B">
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
-                                    {:lang('SAVE')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="C">
+                        <table class="table table-bordered">
+                            <thead>3. 家族史</thead>
+                            <tr>
+                                <th>家族史<span class="form-required">*</span></th>
+                                <td>
+                                    <input type="radio" name="user_info[family][radio]" value="1" <eq name="user_info[family][radio]" value="1">checked</eq> >无
+                                    <input type="radio" name="user_info[family][radio]" value="2" <eq name="user_info[family][radio]" value="2">checked</eq> >有
+                                    <input type="radio" name="user_info[family][radio]" value="3" <eq name="user_info[family][radio]" value="3">checked</eq> >不详
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>其他帕金森病患者<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[family][other_pd]"   value="{$user_info[family][other_pd]}" placeholder="请输入"/>
+                                </td>
+                                <th>患者亲属是谁<span class="form-required"></span></th>
+                                <td>
+                                    <input class="form-control" type="text" name="user_info[family][other_pd_who]"   value="{$user_info[family][other_pd_who]}" placeholder="请输入"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>其他疾病<span class="form-required"></span></th>
+                                <td>
+                                    <foreach name="poisonList" item="vo" key="k">
+                                        <input type="checkbox" name="user_info[family][other_disease][{$k}]" value="{$k}" <eq name="user_info[family][other_disease][$k]" value="$k">checked</eq>>{$vo} &nbsp;&nbsp;
+                                    </foreach>
+                                    <input type="text" name="user_info[family][other_disease][other]"  value="{$user_info[family][other_disease][other]}"  >
+                                </td>
+                            </tr>
+                        </table>
+
+
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
