@@ -28,4 +28,19 @@ function adminLog($log_info){
     Db::name('admin_log')->insert($add);
 }
 
+/**
+ * 导出excel
+ * @param $strTable	表格内容
+ * @param $filename 文件名
+ */
+function downloadExcel($strTable,$filename)
+{
+    header("Content-type: application/vnd.ms-excel");
+    header("Content-Type: application/force-download");
+    header("Content-Disposition: attachment; filename=".$filename."_".date('Y-m-d').".xls");
+    header('Expires:0');
+    header('Pragma:public');
+    echo '<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'.$strTable.'</html>';
+}
+
 

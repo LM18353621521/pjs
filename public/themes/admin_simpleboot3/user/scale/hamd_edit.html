@@ -53,21 +53,24 @@
                     </tr>
 
                     <table class="table table-bordered">
-                        <tr>
-                            <th width="420" style="text-align: center">
-                                症状
-                            </th>
-                            <td width="80">正确&nbsp;&nbsp;</td>
-                            <td width="80">错误&nbsp;&nbsp;</td>
-                            <td></td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<th width="420" style="text-align: center">-->
+                                <!--症状-->
+                            <!--</th>-->
+                            <!--<td width="80">正确&nbsp;&nbsp;</td>-->
+                            <!--<td width="80">错误&nbsp;&nbsp;</td>-->
+                            <!--<td></td>-->
+                        <!--</tr>-->
                         <foreach name="items_list" item="vo" key="k">
                             <tr>
-                                <th >
+                                <th width="420">
                                     {$k}、{$vo.name}
                                 </th>
-                                <td ><label for="mmse1{$k}"><input type="radio" id="mmse1{$k}" name="items[mmse][{$k}]"  value="1" <eq name="data[items][mmse][$k]" value="1">checked</eq>  > 正确 &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse2{$k}"><input type="radio" id="mmse2{$k}" name="items[mmse][{$k}]"  value="2" <eq name="data[items][mmse][$k]" value="2">checked</eq>  > 错误 &nbsp;&nbsp;</label></td>
+                                <td >
+                                <for start="0" end="$vo[unit]" name="i">
+                                    <label for="hamd{$k}{$i}">{$i}=<input type="radio" id="hamd{$k}{$i}" name="items[mmse][{$k}{$i}]"  value="1" <eq name="data[items][mmse][$k.$i]" value="1">checked</eq>  > &nbsp;&nbsp;</label>
+                                </for>
+                                </td>
                                 <td></td>
                             </tr>
                         </foreach>

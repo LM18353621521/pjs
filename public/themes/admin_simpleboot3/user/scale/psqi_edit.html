@@ -1,0 +1,216 @@
+<include file="public@header"/>
+<script src="__STATIC__/js/laydate/laydate.js"></script>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .form-control {
+        display: inherit;
+        width: 80%;
+    }
+
+    .w_60 {
+        width: 60%;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <foreach name="type_list" item="vo" key="k">
+            <li <eq name="inc_type" value="$k">class="active"</eq> ><a href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$k))}" >{$vo}</a></li>
+        </foreach>
+    </ul>
+    <br>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th width="200">姓名：{$user.user_nickname}</th>
+            <th width="120">编号：{$user.user_code}</th>
+            <th width="100">性别：<if condition="$user.sex eq 1">男<else/>女</if></th>
+            <th width="100">年龄：{$user.age}</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <br>
+    <ul class="nav nav-tabs" style="display: inline-block;">
+        <li ><a href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$inc_type))}">记录列表</a></li>
+        <li class="active"><a href="javascript:;"><empty name="data">添加<else/>编辑</empty>记录</a></li>
+    </ul>
+    <form action="{:url('Scale/addPost',array('inc_type'=>$inc_type))}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <input type="hidden" name="user_id" value="{$user.id}">
+        <input type="hidden" name="id" value="{$data.id}">
+        <input type="hidden" name="inc_type" value="{$inc_type}">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="title" required value="{$data.title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th width="820" >
+                                1、 近1个月，晚上上床睡觉时间通常是 <input type="text" name="items[psqi][1]"  value="{$data[items][psqi][1]}"> 点钟。
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="820" >
+                                2、 近1个月，从上床到入睡通常需要     分钟。
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                <label for="item12">0：≤15min     <input type="radio" id="item12" name="items[psqi][2]"  value="1" <eq name="data[items][psqi][2]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item22">1：16~30min <input type="radio" id="item22" name="items[psqi][2]"  value="2" <eq name="data[items][psqi][2]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item32">2：31~60min <input type="radio" id="item32" name="items[psqi][2]"  value="3" <eq name="data[items][psqi][2]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item42">3：≥60min     <input type="radio" id="item42" name="items[psqi][2]"  value="4" <eq name="data[items][psqi][2]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th width="820" >
+                                3、 近1个月，通常早上<input type="text" name="items[psqi][3]"  value="{$data[items][psqi][3]}">点起床。
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th width="820" >
+                                4、 近1个月，每夜通常实际睡眠时间<input type="text" name="items[psqi][4]"  value="{$data[items][psqi][4]}">小时
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th >
+                                5、 近一个月，您有没有因下列情况影响睡眠而烦恼
+                            </th>
+                        </tr>
+                        <foreach name="items_list" item="vo" key="k">
+                            <tr style="padding-left: 30px !important;">
+                                <th >
+                                    {$k}、{$vo.name}
+                                </th>
+                            </tr>
+                            <tr style="padding-left: 30px !important;">
+                                <th >
+                                    <label for="item1{$k}">0：无            <input type="radio" id="item1{$k}" name="items[psqi][5][{$k}]"  value="1" <eq name="data[items][psqi][5][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                    <label for="item2{$k}">1：<1次/周   <input type="radio" id="item2{$k}" name="items[psqi][5][{$k}]"  value="2" <eq name="data[items][psqi][5][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                    <label for="item3{$k}">2：1~2次/周 <input type="radio" id="item3{$k}" name="items[psqi][5][{$k}]"  value="3" <eq name="data[items][psqi][5][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
+                                    <label for="item4{$k}">3：≧3次/周    <input type="radio" id="item4{$k}" name="items[psqi][5][{$k}]"  value="4" <eq name="data[items][psqi][5][$k]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                                </th>
+                            </tr>
+                        </foreach>
+                        <tr>
+                            <th width="820" style="text-align: center">
+                                如果有，请说明： <input type="text"  class="form-control"  name="items[psqi][5][k]"  value="{$data[items][psqi][5][k]}">
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th >
+                                6、 近1个月，总的来说，您认为自己的睡眠质量
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                <label for="item16">0：很好       <input type="radio" id="item16" name="items[psqi][6]"  value="1" <eq name="data[items][psqi][6]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item26">1：很好       <input type="radio" id="item26" name="items[psqi][6]"  value="2" <eq name="data[items][psqi][6]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item36">2：较差       <input type="radio" id="item36" name="items[psqi][6]"  value="3" <eq name="data[items][psqi][6]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item46">3：很差       <input type="radio" id="item46" name="items[psqi][6]"  value="4" <eq name="data[items][psqi][6]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                7、 近1个月，您用催眠药物的情况
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                <label for="item17">0：无       <input type="radio" id="item17" name="items[psqi][7]"  value="1" <eq name="data[items][psqi][7]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item27">1：<1次/周        <input type="radio" id="item27" name="items[psqi][7]"  value="2" <eq name="data[items][psqi][7]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item37">2：1~2次/周       <input type="radio" id="item37" name="items[psqi][7]"  value="3" <eq name="data[items][psqi][7]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item47">3：≧3次/周       <input type="radio" id="item47" name="items[psqi][7]"  value="4" <eq name="data[items][psqi][7]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                8、 近1个月，您感到困倦吗?
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                <label for="item18">0：无      <input type="radio" id="item18" name="items[psqi][8]"  value="1" <eq name="data[items][psqi][8]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item28">1：<1次/周        <input type="radio" id="item28" name="items[psqi][8]"  value="2" <eq name="data[items][psqi][8]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item38">2：1~2次/周        <input type="radio" id="item38" name="items[psqi][8]"  value="3" <eq name="data[items][psqi][8]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item48">3：≧3次/周       <input type="radio" id="item48" name="items[psqi][8]"  value="4" <eq name="data[items][psqi][8]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                9、 近1个月，您感到做事的精力不足吗?
+                            </th>
+                        </tr>
+                        <tr>
+                            <th >
+                                <label for="item19">0：没有      <input type="radio" id="item19" name="items[psqi][9]"  value="1" <eq name="data[items][psqi][9]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item29">1：偶尔有      <input type="radio" id="item29" name="items[psqi][9]"  value="2" <eq name="data[items][psqi][9]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item39">2：有时有      <input type="radio" id="item39" name="items[psqi][9]"  value="3" <eq name="data[items][psqi][9]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item49">3：经常有      <input type="radio" id="item49" name="items[psqi][9]"  value="4" <eq name="data[items][psqi][9]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th width="50">备注</th>
+                            <td colspan="6">
+                                <textarea class="form-control" style="height: 100px;" name="remark" placeholder="请填写备注">{$data.remark}</textarea>
+                            </td>
+                        </tr>
+                    </table>
+
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit"><empty name="data">{:lang('ADD')}<else/>{:lang('EDIT')}</empty></button>
+                        <a class="btn btn-default" href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$inc_type))}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#visit_time', //指定元素
+            type: 'datetime'
+        });
+
+    });
+</script>
+</body>
+</html>

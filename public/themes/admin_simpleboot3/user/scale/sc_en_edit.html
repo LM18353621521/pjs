@@ -56,9 +56,12 @@
                         <foreach name="items_list" item="vo" key="k">
                             <tr>
                                 <th width="80">
-                                    {$k}% <input type="radio" name="items[1]"  value="{$k}" <eq name="data[items][1]" value="$k">checked</eq>  > &nbsp;&nbsp;
+                                    {$k}、{$vo.name}
                                 </th>
-                                <td >{$vo.name}<span class="form-required"></span></td>
+                                <td width="20"><input type="radio" name="items[sc][$k]"  value="1" <eq name="data[items][sc][$k]" value="1">checked</eq>  > &nbsp;&nbsp;</td>
+                                <td width="20"><input type="radio" name="items[sc][$k]"  value="2" <eq name="data[items][sc][$k]" value="2">checked</eq>  > &nbsp;&nbsp;</td>
+                                <td width="20"><input type="radio" name="items[sc][$k]"  value="3" <eq name="data[items][sc][$k]" value="3">checked</eq>  > &nbsp;&nbsp;</td>
+
                             </tr>
                         </foreach>
 

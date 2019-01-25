@@ -13,7 +13,8 @@ namespace app\user\controller;
 
 use cmf\controller\AdminBaseController;
 use think\Db;
-error_reporting(E_ERROR | E_PARSE );
+
+error_reporting(E_ERROR | E_PARSE);
 
 /**
  * Class AdminIndexController
@@ -57,11 +58,11 @@ class AdminIndexController extends AdminBaseController
      */
     public function index()
     {
-        $where   = ['user_type'=>2];
+        $where = ['user_type' => 2];
         $request = input('request.');
 
         if (!empty($request['user_nickname'])) {
-            $where['user_nickname'] = ['like', "%".$request['user_nickname']."%"];
+            $where['user_nickname'] = ['like', "%" . $request['user_nickname'] . "%"];
         }
         if (!empty($request['sex'])) {
             $where['sex'] = $request['sex'];
@@ -72,17 +73,19 @@ class AdminIndexController extends AdminBaseController
         if (!empty($request['mobile'])) {
             $where['mobile'] = $request['mobile'];
         }
-        if (!empty($request['start_time'])&&!empty($request['end_time'])) {
+        if (!empty($request['start_time']) && !empty($request['end_time'])) {
             $start_time = strtotime($request['start_time']);
-            $end_time = strtotime($request['end_time'])+86400;
-            $where['create_time'] = array('between',[$start_time,$end_time]);
+            $end_time = strtotime($request['end_time']) + 86400;
+            $where['create_time'] = array('between', [$start_time, $end_time]);
         }
 
         $role_id = session('ADMIN_ROLE_ID');
-        if($role_id==2){
+        if ($role_id == 2) {
             $admin_id = session('ADMIN_ID');
-            $where['bind_admin_id']=$admin_id;
+            $where['bind_admin_id'] = $admin_id;
         }
+
+        session('where_user_index', $where);
 
 
         $keywordComplex = [];
@@ -97,6 +100,66 @@ class AdminIndexController extends AdminBaseController
         // 渲染模板输出
         return $this->fetch();
     }
+
+    /**
+     * 导出订单
+     */
+    public function export_user()
+    {
+        //搜索条件
+        $where = session('where_user_index');
+        $list = Db::name('user')->alias('a')
+            ->join('user_info un', 'a.id=un.user_id', 'left')
+            ->field('a.*,un.nation,country,address')
+            ->where($where)->order("create_time DESC")->select()->toArray();
+
+        $strTable = '<table width="500" border="1">';
+        $strTable .= '<tr>';
+        $strTable .= '<td style="text-align:center;font-size:12px;width:20px;">ID</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="100">患者编号</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="100">患者姓名</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">性别</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">出生日期</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">年龄</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">手机号码</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">邮箱</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">国家</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">民族</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">家庭住址</td>';
+
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">注册时间</td>';
+        $strTable .= '</tr>';
+        if (is_array($list)) {
+            foreach ($list as $k => $val) {
+                $sex = $val['sex'] == 1 ? '男' : '女';
+                $country = unserialize($val['country']);
+                if($country['radio']==1){
+                    $country= "中国";
+                }else{
+                    $country=$country['other'];
+                }
+                $strTable .= '<tr>';
+                $strTable .= '<td style="text-align:center;font-size:12px;">&nbsp;' . $val['id'] . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['user_code'] . ' </td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['user_nickname'] . ' </td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $sex . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['brithday'] . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['age'] . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['mobile'] . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['user_email'] . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $country . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['nation'] . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . $val['address'] . '</td>';
+                $strTable .= '<td style="text-align:left;font-size:12px;">' . date("Y-m-d H:i:s", $val['create_time']) . '</td>';
+                $strTable .= '</tr>';
+            }
+        }
+        $strTable .= '</table>';
+        unset($list);
+        downloadExcel($strTable, 'user');
+        exit();
+    }
+
 
     /**
      * 添加-本站用户列表
@@ -114,37 +177,37 @@ class AdminIndexController extends AdminBaseController
     public function add()
     {
         $user_code = Db::name('user')->max('user_code');
-        $user_code=$user_code>=10000?($user_code+1):10000;
-        $this->assign('user_code',$user_code);
+        $user_code = $user_code >= 10000 ? ($user_code + 1) : 10000;
+        $this->assign('user_code', $user_code);
 
         $poisonList = array(
-            'poison0'=>'奋乃静',
-            'poison1'=>'盐酸硫利哒嗪',
-            'poison2'=>'氯丙嗪',
-            'poison3'=>'三氟拉嗪',
-            'poison4'=>'氟哌啶醇',
-            'poison5'=>'氟哌利多',
-            'poison6'=>'利血平',
-            'poison7'=>'甲氧氯普胺',
-            'poison8'=>'α-甲基多巴',
-            'poison9'=>'锂剂',
-            'poison10'=>'氟桂利嗪',
-            'poison11'=>'桂利嗪级',
+            'poison0' => '奋乃静',
+            'poison1' => '盐酸硫利哒嗪',
+            'poison2' => '氯丙嗪',
+            'poison3' => '三氟拉嗪',
+            'poison4' => '氟哌啶醇',
+            'poison5' => '氟哌利多',
+            'poison6' => '利血平',
+            'poison7' => '甲氧氯普胺',
+            'poison8' => 'α-甲基多巴',
+            'poison9' => '锂剂',
+            'poison10' => '氟桂利嗪',
+            'poison11' => '桂利嗪级',
         );
-        $this->assign('poisonList',$poisonList);
+        $this->assign('poisonList', $poisonList);
 
         $other_disease_list = array(
-            '1'=>'高血压',
-            '2'=>'糖尿病',
-            '3'=>'高脂血症',
-            '4'=>'脑出血',
-            '5'=>'脑梗死',
-            '6'=>'血管性痴呆',
-            '7'=>'骨关节病',
-            '8'=>'性肺病',
-            '9'=>'其他',
+            '1' => '高血压',
+            '2' => '糖尿病',
+            '3' => '高脂血症',
+            '4' => '脑出血',
+            '5' => '脑梗死',
+            '6' => '血管性痴呆',
+            '7' => '骨关节病',
+            '8' => '性肺病',
+            '9' => '其他',
         );
-        $this->assign('other_disease_list',$other_disease_list);
+        $this->assign('other_disease_list', $other_disease_list);
 
         return $this->fetch();
     }
@@ -165,32 +228,32 @@ class AdminIndexController extends AdminBaseController
     public function addPost()
     {
         if ($this->request->isPost()) {
-            $data   = $this->request->param();
+            $data = $this->request->param();
             $user_info = $data['user_info'];
             unset($data['user_info']);
             $data['bind_admin_id'] = session('ADMIN_ID');
             $data['user_type'] = 2;
             $data['birthday'] = strtotime($data['birthday']);
-            if(!$data['id']){
-                $data['create_time']=time();
+            if (!$data['id']) {
+                $data['create_time'] = time();
                 $res = Db::name('user')->insertGetId($data);
-                foreach($user_info as&$val){
-                    if(is_array($val)){
+                foreach ($user_info as &$val) {
+                    if (is_array($val)) {
                         $val = serialize($val);
                     }
                 }
-                $user_info['user_id']=$res;
+                $user_info['user_id'] = $res;
                 $res = Db::name('user_info')->insert($user_info);
-                $msg ="添加成功";
-            }else{
-                $res = Db::name('user')->where(array('id'=>$data['id']))->update($data);
-                foreach($user_info as&$val){
-                    if(is_array($val)){
+                $msg = "添加成功";
+            } else {
+                $res = Db::name('user')->where(array('id' => $data['id']))->update($data);
+                foreach ($user_info as &$val) {
+                    if (is_array($val)) {
                         $val = serialize($val);
                     }
                 }
-                $res = Db::name('user_info')->where(array('user_id'=>$data['id']))->update($user_info);
-                $msg ="编辑成功";
+                $res = Db::name('user_info')->where(array('user_id' => $data['id']))->update($user_info);
+                $msg = "编辑成功";
             }
             $this->success($msg, url('AdminIndex/index', ['id' => $res]));
         }
@@ -200,8 +263,8 @@ class AdminIndexController extends AdminBaseController
     {
         $user_id = $this->request->param('user_id', 0, 'intval');
         $user_model = Db::name('user');
-        $user =$user_model->where(array('id'=>$user_id))->find();
-        $user_info = Db::name('user_info')->where(array('user_id'=>$user_id))->find();
+        $user = $user_model->where(array('id' => $user_id))->find();
+        $user_info = Db::name('user_info')->where(array('user_id' => $user_id))->find();
 
         $user_info['country'] = unserialize($user_info['country']);
         $user_info['occupation'] = unserialize($user_info['occupation']);
@@ -216,39 +279,37 @@ class AdminIndexController extends AdminBaseController
         $user_info['family'] = unserialize($user_info['family']);
 
         $poisonList = array(
-            'poison0'=>'奋乃静',
-            'poison1'=>'盐酸硫利哒嗪',
-            'poison2'=>'氯丙嗪',
-            'poison3'=>'三氟拉嗪',
-            'poison4'=>'氟哌啶醇',
-            'poison5'=>'氟哌利多',
-            'poison6'=>'利血平',
-            'poison7'=>'甲氧氯普胺',
-            'poison8'=>'α-甲基多巴',
-            'poison9'=>'锂剂',
-            'poison10'=>'氟桂利嗪',
-            'poison11'=>'桂利嗪级',
+            'poison0' => '奋乃静',
+            'poison1' => '盐酸硫利哒嗪',
+            'poison2' => '氯丙嗪',
+            'poison3' => '三氟拉嗪',
+            'poison4' => '氟哌啶醇',
+            'poison5' => '氟哌利多',
+            'poison6' => '利血平',
+            'poison7' => '甲氧氯普胺',
+            'poison8' => 'α-甲基多巴',
+            'poison9' => '锂剂',
+            'poison10' => '氟桂利嗪',
+            'poison11' => '桂利嗪级',
         );
-        $this->assign('poisonList',$poisonList);
+        $this->assign('poisonList', $poisonList);
 
         $other_disease_list = array(
-            '1'=>'高血压',
-            '2'=>'糖尿病',
-            '3'=>'高脂血症',
-            '4'=>'脑出血',
-            '5'=>'脑梗死',
-            '6'=>'血管性痴呆',
-            '7'=>'骨关节病',
-            '8'=>'性肺病',
-            '9'=>'其他',
+            '1' => '高血压',
+            '2' => '糖尿病',
+            '3' => '高脂血症',
+            '4' => '脑出血',
+            '5' => '脑梗死',
+            '6' => '血管性痴呆',
+            '7' => '骨关节病',
+            '8' => '性肺病',
+            '9' => '其他',
         );
-        $this->assign('other_disease_list',$other_disease_list);
-        $this->assign('user',$user);
-        $this->assign('user_info',$user_info);
+        $this->assign('other_disease_list', $other_disease_list);
+        $this->assign('user', $user);
+        $this->assign('user_info', $user_info);
         return $this->fetch();
     }
-
-
 
 
     /**
@@ -278,6 +339,7 @@ class AdminIndexController extends AdminBaseController
             $this->error('数据传入失败！');
         }
     }
+
     /**
      * 本站用户启用
      * @adminMenu(

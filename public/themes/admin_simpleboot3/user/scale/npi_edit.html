@@ -53,12 +53,26 @@
                     </tr>
 
                     <table class="table table-bordered">
+                        <theade>
+                            频率为4级评定（1~4分）：<br>
+                            1分=偶尔，少于每周1次；2分=经常，大约每周1次；<br>
+                            3分=频繁，每周几次但少于每天1次；4分=十分频繁，每天1次或更多或持续<br>
+                            严重程度为3级评定（1~3分）：<br>
+                            1分=轻度，可以察觉但不明显；2分=中度，明显但不突出；3分=重度，非常突出的变化<br>
+                            使照料者的苦恼程度为6级评定（0~5分）：<br>
+                            0分=不苦恼；1分=极轻度的苦恼，照料者无需采取措施应对；<br>
+                            2分=轻度苦恼，照料者很容易应对；3分=中度苦恼，照料者难以自行应对；<br>
+                            4分=重度苦恼，照料者难以应对；5分=极度苦恼，照料者无法应对。<br>
+                        </theade>
                         <tr>
-                            <th width="420" style="text-align: center">
+                            <th width="520" style="text-align: center">
                                 症状
                             </th>
-                            <td width="80">正确&nbsp;&nbsp;</td>
-                            <td width="80">错误&nbsp;&nbsp;</td>
+                            <td width="50">有&nbsp;<br>无</td>
+                            <td width="60">频率</td>
+                            <td width="80">严重程度</td>
+                            <td width="100">频率×严重程度</td>
+                            <td width="100">使照料者苦恼程度</td>
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
@@ -66,15 +80,34 @@
                                 <th >
                                     {$k}、{$vo.name}
                                 </th>
-                                <td ><label for="mmse1{$k}"><input type="radio" id="mmse1{$k}" name="items[mmse][{$k}]"  value="1" <eq name="data[items][mmse][$k]" value="1">checked</eq>  > 正确 &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse2{$k}"><input type="radio" id="mmse2{$k}" name="items[mmse][{$k}]"  value="2" <eq name="data[items][mmse][$k]" value="2">checked</eq>  > 错误 &nbsp;&nbsp;</label></td>
+                                <td >
+                                    <label for="item2{$k}">1 <input type="radio" id="item2{$k}" name="items[npi][{$k}][1]"  value="1" <eq name="data[items][npi][$k][1]" value="1">checked</eq>  > </label>
+                                    <label for="item1{$k}">0 <input type="radio" id="item1{$k}" name="items[npi][{$k}][1]"  value="2" <eq name="data[items][npi][$k][1]" value="2">checked</eq>  >  &nbsp;</label>
+                                </td>
+                                <td><input type="text" class="form-control"  name="items[npi][{$k}][2]"  value="{$data[items][npi][$k][2]}"></td>
+                                <td><input type="text" class="form-control"  name="items[npi][{$k}][3]"  value="{$data[items][npi][$k][3]}"></td>
+                                <td><input type="text" class="form-control"  name="items[npi][{$k}][4]"  value="{$data[items][npi][$k][4]}"></td>
+                                <td><input type="text" class="form-control"  name="items[npi][{$k}][5]"  value="{$data[items][npi][$k][5]}"></td>
                                 <td></td>
                             </tr>
                         </foreach>
 
+                            <tr>
+                                <th >
+                                    总分
+                                </th>
+                                <td >
+                                </td>
+                                <td><input type="text" class="form-control"  name="items[npi][t2]"  value="{$data[items][npi][t2]}"></td>
+                                <td><input type="text" class="form-control"  name="items[npi][t3]"  value="{$data[items][npi][t3]}"></td>
+                                <td><input type="text" class="form-control"  name="items[npi][t4]"  value="{$data[items][npi][t4]}"></td>
+                                <td><input type="text" class="form-control"  name="items[npi][t5]"  value="{$data[items][npi][t5]}"></td>
+                                <td></td>
+                            </tr>
+
                         <tr>
                             <th width="50">备注</th>
-                            <td colspan="3">
+                            <td colspan="6">
                                 <textarea class="form-control" style="height: 100px;" name="remark" placeholder="请填写备注">{$data.remark}</textarea>
                             </td>
                         </tr>

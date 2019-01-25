@@ -53,12 +53,20 @@
                     </tr>
 
                     <table class="table table-bordered">
+                        <theade>
+                            1、自己完全可以做<br>
+                            2、可以做但有些困难<br>
+                            3、有较大困难需要家人帮助<br>
+                            4、完全需要家人帮助<br>
+                        </theade>
                         <tr>
-                            <th width="420" style="text-align: center">
-                                症状
+                            <th width="520" style="text-align: center">
+                                问  题
                             </th>
-                            <td width="80">正确&nbsp;&nbsp;</td>
-                            <td width="80">错误&nbsp;&nbsp;</td>
+                            <td width="110">自己完全可以做 </td>
+                            <td width="110">可以做但有些困难</td>
+                            <td width="110">有较大困难需要家人帮助</td>
+                            <td width="110">完全需要家人帮助 </td>
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
@@ -66,15 +74,25 @@
                                 <th >
                                     {$k}、{$vo.name}
                                 </th>
-                                <td ><label for="mmse1{$k}"><input type="radio" id="mmse1{$k}" name="items[mmse][{$k}]"  value="1" <eq name="data[items][mmse][$k]" value="1">checked</eq>  > 正确 &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse2{$k}"><input type="radio" id="mmse2{$k}" name="items[mmse][{$k}]"  value="2" <eq name="data[items][mmse][$k]" value="2">checked</eq>  > 错误 &nbsp;&nbsp;</label></td>
+                                <td >
+                                    <label for="item1{$k}">1 <input type="radio" id="item1{$k}" name="items[adl][{$k}]"  value="1" <eq name="data[items][adl][$k]" value="1">checked</eq>  > &nbsp;</label>
+                                </td>
+                                <td >
+                                    <label for="item2{$k}">2 <input type="radio" id="item2{$k}" name="items[adl][{$k}]"  value="2" <eq name="data[items][adl][$k]" value="2">checked</eq>  >  &nbsp;</label>
+                                </td>
+                                <td >
+                                    <label for="item3{$k}">3 <input type="radio" id="item3{$k}" name="items[adl][{$k}]"  value="3" <eq name="data[items][adl][$k]" value="3">checked</eq>  > &nbsp;</label>
+                                </td>
+                                <td >
+                                    <label for="item4{$k}">4 <input type="radio" id="item4{$k}" name="items[adl][{$k}]"  value="4" <eq name="data[items][adl][$k]" value="4">checked</eq>  >  &nbsp;</label>
+                                </td>
                                 <td></td>
                             </tr>
                         </foreach>
 
                         <tr>
                             <th width="50">备注</th>
-                            <td colspan="3">
+                            <td colspan="6">
                                 <textarea class="form-control" style="height: 100px;" name="remark" placeholder="请填写备注">{$data.remark}</textarea>
                             </td>
                         </tr>
