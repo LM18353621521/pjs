@@ -17,11 +17,11 @@ use think\Db;
 error_reporting(E_ERROR | E_PARSE);
 
 /**
- * 患者化验检查管理
+ * 患者中心名称及诊断管理
  * Class MedicalHistoryController
  * @package app\user\controller
  */
-class AssayCheckController extends AdminBaseController
+class CenterDiagnoseController extends AdminBaseController
 {
     public function _initialize()
     {
@@ -30,33 +30,6 @@ class AssayCheckController extends AdminBaseController
         $user = Db::name('user')->find($user_id);
         $this->user = $user;
         $this->admin_id = session('ADMIN_ID');
-
-        $items_list = array(
-            '1' => array('name' => '白细胞', 'unit' => '*109/L'),
-            '2' => array('name' => '血红蛋白', 'unit' => 'g/L'),
-            '3' => array('name' => '红细胞', 'unit' => '*1012/L'),
-            '4' => array('name' => '甘油三酯', 'unit' => 'mmol/L'),
-            '5' => array('name' => '总胆固醇', 'unit' => 'mmol/L'),
-            '6' => array('name' => '低密度', 'unit' => 'mmol/L'),
-            '7' => array('name' => '高密度', 'unit' => 'mmol/L'),
-            '8' => array('name' => '同型半胱氨酸', 'unit' => 'mmol/L'),
-            '9' => array('name' => '叶酸', 'unit' => 'ng/ml'),
-            '10' => array('name' => '维生素B12', 'unit' => 'pg/ml'),
-            '11' => array('name' => '铁蛋白', 'unit' => ' ng/ml'),
-            '12' => array('name' => '总胆红素', 'unit' => 'mmol/L'),
-            '13' => array('name' => '直接胆红素', 'unit' => 'mmol/L'),
-            '14' => array('name' => '间接胆红素', 'unit' => 'mmol/L'),
-            '15' => array('name' => '谷氨酰转肽酶', 'unit' => 'U/L'),
-            '16' => array('name' => '谷丙转氨酶', 'unit' => 'U/L'),
-            '17' => array('name' => '谷草转氨酶', 'unit' => 'U/L'),
-            '18' => array('name' => '碱性磷酸酶', 'unit' => 'U/L'),
-            '19' => array('name' => '尿素氮', 'unit' => 'mmol/L'),
-            '20' => array('name' => '肌酐', 'unit' => 'mmol/L'),
-            '21' => array('name' => '尿酸', 'unit' => 'mmol/L'),
-        );
-        $this->assign('items_list',$items_list);
-
-
         $this->assign('user', $user);
     }
 
@@ -81,7 +54,7 @@ class AssayCheckController extends AdminBaseController
         $where['user_id'] = input('user_id');
 
         $keywordComplex = [];
-        $usersQuery = Db::name('user_assay_check');
+        $usersQuery = Db::name('user_center_diagnose');
 
         $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(15);
         // 获取分页显示
@@ -126,7 +99,7 @@ class AssayCheckController extends AdminBaseController
      */
     public function addPost()
     {
-        $model = Db::name('user_assay_check');
+        $model = Db::name('user_center_diagnose');
         if ($this->request->isPost()) {
             $data = $this->request->param();
 
@@ -139,13 +112,13 @@ class AssayCheckController extends AdminBaseController
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time'] = time();
                 $res = $model->insert($data);
-                adminLog("添加化验检查(ID:$res)");
-                $this->success('添加成功!', url('AssayCheck/index', ['user_id' => $data['user_id']]));
+                adminLog("添加中心名称及诊断(ID:$res)");
+                $this->success('添加成功!', url('CenterDiagnose/index', ['user_id' => $data['user_id']]));
             } else {
                 $data['update_time'] = time();
                 $res = $model->where(array('id' => $data['id']))->update($data);
-                adminLog("编辑化验检查(ID:" . $data['id'] . ")");
-                $this->success('编辑成功!', url('AssayCheck/index', ['user_id' => $data['user_id']]));
+                adminLog("编辑中心名称及诊断(ID:" . $data['id'] . ")");
+                $this->success('编辑成功!', url('CenterDiagnose/index', ['user_id' => $data['user_id']]));
             }
         }
 
@@ -156,11 +129,12 @@ class AssayCheckController extends AdminBaseController
      */
     public function edit()
     {
-        $model = Db::name('user_assay_check');
+        $model = Db::name('user_center_diagnose');
         $id = $this->request->param('id', 0, 'intval');
         $data = $model->find($id);
 
-        $data['items'] = unserialize($data['items']);
+        $data['old_diagnose'] = unserialize($data['old_diagnose']);
+        $data['new_diagnose'] = unserialize($data['new_diagnose']);
         $this->assign('data', $data);
         return $this->fetch();
     }
@@ -171,19 +145,19 @@ class AssayCheckController extends AdminBaseController
      */
     public function delete()
     {
-        $model = Db::name('user_assay_check');
+        $model = Db::name('user_center_diagnose');
         $param = $this->request->param();
         if (isset($param['id'])) {
             $id = $this->request->param('id', 0, 'intval');
             $result = $model->where(['id' => $id])->find();
             $model->where(['id' => $id])->delete();
-            adminLog("删除化验检查(ID:" . $id . ")");
+            adminLog("删除中心名称及诊断(ID:" . $id . ")");
             $this->success("删除成功！", '');
         }
         if (isset($param['ids'])) {
             $ids = $this->request->param('ids/a');
             $result = $model->where(['id' => ['in', $ids]])->delete();
-            adminLog("删除化验检查(ID:" . implode(",", $ids) . ")");
+            adminLog("删除中心名称及诊断(ID:" . implode(",", $ids) . ")");
             if ($result) {
                 $this->success("删除成功！", '');
             }

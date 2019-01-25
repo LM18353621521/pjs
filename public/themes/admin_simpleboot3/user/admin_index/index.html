@@ -68,7 +68,7 @@
                     <td>{$user_statuses[$vo['user_status']]}</td>
                     <td>
                         <a href="{:url('adminIndex/edit',array('user_id'=>$vo['id']))}">编辑资料</a>
-                        <a href="{:url('UserVisit/index',array('user_id'=>$vo['id']))}">编辑问卷</a>
+                        <a href="{:url('Scale/index',array('user_id'=>$vo['id']))}">编辑问卷</a>
                         <a href="{:url('UserVisit/index',array('user_id'=>$vo['id']))}">随访提醒</a>
                         <neq name="vo.id" value="1">
                             <empty name="vo.user_status">

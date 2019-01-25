@@ -17,15 +17,9 @@
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
-        <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
-        <li><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
-        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
-        <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
-        <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
-        <li class="active"><a href="javascript:;">化验检查</a></li>
-        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
-        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
-        <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+        <foreach name="type_list" item="vo" key="k">
+            <li <eq name="inc_type" value="$k">class="active"</eq> ><a href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$k))}" >{$vo}</a></li>
+        </foreach>
     </ul>
     <br>
     <table class="table table-hover table-bordered table-list">
@@ -41,12 +35,13 @@
     </table>
     <br>
     <ul class="nav nav-tabs" style="display: inline-block;">
-        <li ><a href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}">化验检查列表</a></li>
-        <li class="active"><a href="javascript:;">编辑化验检查</a></li>
+        <li ><a href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$inc_type))}">记录列表</a></li>
+        <li class="active"><a href="javascript:;"><empty name="data">添加<else/>编辑</empty>记录</a></li>
     </ul>
-    <form action="{:url('AssayCheck/addPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+    <form action="{:url('Scale/addPost',array('inc_type'=>$inc_type))}" method="post" class="form-horizontal js-ajax-form margin-top-20">
         <input type="hidden" name="user_id" value="{$user.id}">
         <input type="hidden" name="id" value="{$data.id}">
+        <input type="hidden" name="inc_type" value="{$inc_type}">
         <div class="row">
             <div class="col-md-9">
                 <table class="table table-bordered">
@@ -56,29 +51,11 @@
                             <input class="form-control" type="text" name="title" required value="{$data.title}" placeholder="请输入标题"/>
                         </td>
                     </tr>
-
-                    <table class="table table-bordered">
-                        <foreach name="items_list" item="vo" key="k">
-                            <tr>
-                                <th >{$vo.name}<span class="form-required"></span></th>
-                                <td >
-                                    <input type="text" name="items[{$k}]"  value="{$data[items][$k]}">{$vo.unit} &nbsp;&nbsp;
-                                </td>
-                            </tr>
-                        </foreach>
-
-                        <tr>
-                            <th>备注</th>
-                            <td colspan="2">
-                                <textarea class="form-control" style="height: 80px;" name="remark" placeholder="请填写备注">{$data.remark}</textarea>
-                            </td>
-                        </tr>
-                    </table>
                 </table>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
-                        <a class="btn btn-default" href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}">{:lang('BACK')}</a>
+                        <button type="submit" class="btn btn-primary js-ajax-submit"><empty name="data">{:lang('ADD')}<else/>{:lang('EDIT')}</empty></button>
+                        <a class="btn btn-default" href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$inc_type))}">{:lang('BACK')}</a>
                     </div>
                 </div>
             </div>
@@ -109,11 +86,7 @@
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#date', //指定元素
-            type: 'date'
-        });
-        laydate.render({
-            elem: '#datetime', //指定元素
+            elem: '#visit_time', //指定元素
             type: 'datetime'
         });
 

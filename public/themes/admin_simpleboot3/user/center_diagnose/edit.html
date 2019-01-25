@@ -1,0 +1,236 @@
+<include file="public@header"/>
+<script src="__STATIC__/js/laydate/laydate.js"></script>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .form-control {
+        display: inherit;
+        width: 80%;
+    }
+
+    .w_60 {
+        width: 60%;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
+        <li><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
+        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
+        <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
+        <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
+        <li ><a href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}">化验检查</a></li>
+        <li class="active"><a href="{:url('CenterDiagnose/index',array('user_id'=>$user[id]))}">中心名称及诊断</a></li>
+        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
+        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
+        <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+    </ul>
+    <br>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th width="200">姓名：{$user.user_nickname}</th>
+            <th width="120">编号：{$user.user_code}</th>
+            <th width="100">性别：<if condition="$user.sex eq 1">男<else/>女</if></th>
+            <th width="100">年龄：{$user.age}</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <br>
+    <ul class="nav nav-tabs" style="display: inline-block;">
+        <li ><a href="{:url('CenterDiagnose/index',array('user_id'=>$user[id]))}">中心名称及诊断列表</a></li>
+        <li class="active"><a href="javascript:;">编辑中心名称及诊断</a></li>
+    </ul>
+    <form action="{:url('CenterDiagnose/addPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <input type="hidden" name="user_id" value="{$user.id}">
+        <input type="hidden" name="id" value="{$data.id}">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="title" required value="{$data.title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th width="100">标题<span class="form-required">*</span></th>
+                            <td>
+                                <input class="form-control" type="text" name="title" required value="{$data.title}" placeholder="请输入标题"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="100">中心名称<span class="form-required">*</span></th>
+                            <td>
+                                <input class="form-control" type="text" name="center_name" required value="{$data.center_name}" placeholder="请输入标题"/>
+                            </td>
+                        </tr>
+
+                        <table class="table table-bordered">
+                            <thead>初步诊断：</thead>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o11]"  value="1" <eq name="data[old_diagnose][o11]" value="1">checked</eq>  >帕金森病（PD）：&nbsp;&nbsp;
+                                    Hoehn-Yahr:<input type="text" class="form-control w_60" name="old_diagnose[o12]"  value="{$data[old_diagnose][o12]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o21]"  value="1" <eq name="data[old_diagnose][o21]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    继发性帕金森综合征（PDS）:<input type="text" class="form-control w_60" name="old_diagnose[o22]"  value="{$data[old_diagnose][o22]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="old_diagnose[o31]"  value="1" <eq name="data[old_diagnose][o31]" value="1">checked</eq> >感染&nbsp;&nbsp;
+                                    <input type="radio" name="old_diagnose[o31]"  value="2" <eq name="data[old_diagnose][o31]" value="2">checked</eq> >中毒&nbsp;&nbsp;
+                                    <input type="radio" name="old_diagnose[o31]"  value="3" <eq name="data[old_diagnose][o31]" value="3">checked</eq> >药物&nbsp;&nbsp;
+                                    <input type="radio" name="old_diagnose[o31]"  value="4" <eq name="data[old_diagnose][o31]" value="4">checked</eq> >动脉硬化&nbsp;&nbsp;
+                                    <input type="radio" name="old_diagnose[o31]"  value="5" <eq name="data[old_diagnose][o31]" value="5">checked</eq> >脑血管疾病&nbsp;&nbsp;
+                                    <input type="radio" name="old_diagnose[o31]"  value="6" <eq name="data[old_diagnose][o31]" value="6">checked</eq> >脑外伤&nbsp;&nbsp;
+                                    <input type="radio" name="old_diagnose[o31]"  value="7" <eq name="data[old_diagnose][o31]" value="7">checked</eq> >其他：
+                                    <input type="text" name="old_diagnose[o32]" class="form-control w_60"  value="{$data[old_diagnose][o32]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o41]"  value="1" <eq name="data[old_diagnose][o41]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    遗传代谢性相关PD（HPDS）：<input type="text" class="form-control w_60" name="old_diagnose[o42]"  value="{$data[old_diagnose][o42]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o51]"  value="1" <eq name="data[old_diagnose][o51]" value="1">checked</eq>  >MSA&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o61]"  value="1" <eq name="data[old_diagnose][o61]" value="1">checked</eq>  >PSP&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o71]"  value="1" <eq name="data[old_diagnose][o71]" value="1">checked</eq>  >CBD/CBS&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o81]"  value="1" <eq name="data[old_diagnose][o81]" value="1">checked</eq>  >DLB&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="old_diagnose[o91]"  value="1" <eq name="data[old_diagnose][o91]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    不典型帕金森综合征：<input type="text" class="form-control w_60" name="old_diagnose[o92]"  value="{$data[old_diagnose][o92]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered">
+                            <thead>修正诊断：</thead>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n11]"  value="1" <eq name="data[new_diagnose][n11]" value="1">checked</eq>  >帕金森病（PD）：&nbsp;&nbsp;
+                                    Hoehn-Yahr:<input type="text" class="form-control w_60" name="new_diagnose[n12]"  value="{$data[new_diagnose][n12]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n21]"  value="1" <eq name="data[new_diagnose][n21]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    继发性帕金森综合征（PDS）:<input type="text" class="form-control w_60" name="new_diagnose[n22]"  value="{$data[new_diagnose][n22]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="new_diagnose[n31]"  value="1" <eq name="data[new_diagnose][n31]" value="1">checked</eq> >感染&nbsp;&nbsp;
+                                    <input type="radio" name="new_diagnose[n31]"  value="2" <eq name="data[new_diagnose][n31]" value="2">checked</eq> >中毒&nbsp;&nbsp;
+                                    <input type="radio" name="new_diagnose[n31]"  value="3" <eq name="data[new_diagnose][n31]" value="3">checked</eq> >药物&nbsp;&nbsp;
+                                    <input type="radio" name="new_diagnose[n31]"  value="4" <eq name="data[new_diagnose][n31]" value="4">checked</eq> >动脉硬化&nbsp;&nbsp;
+                                    <input type="radio" name="new_diagnose[n31]"  value="5" <eq name="data[new_diagnose][n31]" value="5">checked</eq> >脑血管疾病&nbsp;&nbsp;
+                                    <input type="radio" name="new_diagnose[n31]"  value="6" <eq name="data[new_diagnose][n31]" value="6">checked</eq> >脑外伤&nbsp;&nbsp;
+                                    <input type="radio" name="new_diagnose[n31]"  value="7" <eq name="data[new_diagnose][n31]" value="7">checked</eq> >其他：
+                                    <input type="text" name="new_diagnose[n32]" class="form-control w_60"  value="{$data[new_diagnose][n32]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n41]"  value="1" <eq name="data[new_diagnose][n41]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    遗传代谢性相关PD（HPDS）：<input type="text" class="form-control w_60" name="new_diagnose[n42]"  value="{$data[new_diagnose][n42]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n51]"  value="1" <eq name="data[new_diagnose][n51]" value="1">checked</eq>  >MSA&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n61]"  value="1" <eq name="data[new_diagnose][n61]" value="1">checked</eq>  >PSP&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n71]"  value="1" <eq name="data[new_diagnose][n71]" value="1">checked</eq>  >CBD/CBS&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n81]"  value="1" <eq name="data[new_diagnose][n81]" value="1">checked</eq>  >DLB&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="new_diagnose[n91]"  value="1" <eq name="data[new_diagnose][n91]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    不典型帕金森综合征：<input type="text" class="form-control w_60" name="new_diagnose[n92]"  value="{$data[new_diagnose][n92]}">&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </table>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+                        <a class="btn btn-default" href="{:url('CenterDiagnose/index',array('user_id'=>$user[id]))}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#visit_time', //指定元素
+            type: 'datetime'
+        });
+
+    });
+</script>
+</body>
+</html>
