@@ -1,0 +1,360 @@
+<include file="public@header"/>
+<script src="__STATIC__/js/laydate/laydate.js"></script>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+    .form-control {
+        display: inherit;
+        width: 80%;
+    }
+
+    .w_60 {
+        width: 60%;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <foreach name="type_list" item="vo" key="k">
+            <li <eq name="inc_type" value="$k">class="active"</eq> ><a href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$k))}" >{$vo}</a></li>
+        </foreach>
+    </ul>
+    <br>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th width="200">姓名：{$user.user_nickname}</th>
+            <th width="120">编号：{$user.user_code}</th>
+            <th width="100">性别：<if condition="$user.sex eq 1">男<else/>女</if></th>
+            <th width="100">年龄：{$user.age}</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <br>
+    <ul class="nav nav-tabs" style="display: inline-block;">
+        <li ><a href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$inc_type))}">记录列表</a></li>
+        <li class="active"><a href="javascript:;"><empty name="data">添加<else/>编辑</empty>记录</a></li>
+    </ul>
+    <form action="{:url('Scale/addPost',array('inc_type'=>$inc_type))}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <input type="hidden" name="user_id" value="{$user.id}">
+        <input type="hidden" name="id" value="{$data.id}">
+        <input type="hidden" name="inc_type" value="{$inc_type}">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="title" required value="{$data.title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+
+                    <table class="table table-bordered">
+                        <theade>
+                            路易体痴呆专用病史及症状
+                        </theade>
+                        <tr>
+                            <th width="520" style="text-align: center">
+                                问  题
+                            </th>
+                            <td width="200">是 </td>
+                            <td width="100">否</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th >
+                                1.波动性认知障碍
+                            </th>
+                            <td >
+                                <label for="item11">是 <input type="radio" id="item11" name="items[dlb][1][radio]"  value="1" <eq name="data[items][dlb][1][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item21">否 <input type="radio" id="item21" name="items[dlb][1][radio]"  value="2" <eq name="data[items][dlb][1][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;出现的时间
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" name="items[dlb][1][date1]" placeholder="选择时间" id="dlb_data1" value="{$data[items][dlb][1][date1]}">
+                                <script>
+                                    laydate.render({
+                                        elem: '#dlb_data1', //指定元素
+                                        type: 'date'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th >
+                                2.视幻觉
+                            </th>
+                            <td >
+                                <label for="item12">是 <input type="radio" id="item12" name="items[dlb][2][radio]"  value="1" <eq name="data[items][dlb][2][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item22">否 <input type="radio" id="item22" name="items[dlb][2][radio]"  value="2" <eq name="data[items][dlb][2][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;首次发生的时间
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" name="items[dlb][2][date1]" placeholder="选择时间" id="dlb_data21" value="{$data[items][dlb][2][date1]}">
+                                <script>
+                                    laydate.render({
+                                        elem: '#dlb_data21', //指定元素
+                                        type: 'date'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;出现视幻觉的频率
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" placeholder="输入频率" name="items[dlb][2][date2]" id="dlb_data22" value="{$data[items][dlb][2][date2]}">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th >
+                                3. 快速动眼期睡眠行为障碍
+                            </th>
+                            <td >
+                                <label for="item13">是 <input type="radio" id="item13" name="items[dlb][2][radio]"  value="1" <eq name="data[items][dlb][2][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item23">否 <input type="radio" id="item23" name="items[dlb][2][radio]"  value="2" <eq name="data[items][dlb][2][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;首次发生的时间
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" name="items[dlb][3][date1]" placeholder="选择时间" id="dlb_data31" value="{$data[items][dlb][3][date1]}">
+                                <script>
+                                    laydate.render({
+                                        elem: '#dlb_data31', //指定元素
+                                        type: 'date'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;发作频率
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" placeholder="输入频率" name="items[dlb][2][date2]" id="dlb_data32" value="{$data[items][dlb][3][date2]}">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th >
+                                4. 帕金森综合征
+                            </th>
+                            <td >
+                                <label for="item14">是 <input type="radio" id="item14" name="items[dlb][4][radio]"  value="1" <eq name="data[items][dlb][4][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item24">否 <input type="radio" id="item24" name="items[dlb][4][radio]"  value="2" <eq name="data[items][dlb][4][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;首次发作的时间
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" placeholder="选择时间" name="items[dlb][4][date1]" id="dlb_data41" value="{$data[items][dlb][4][date1]}">
+                                <script>
+                                    laydate.render({
+                                        elem: '#dlb_data41', //指定元素
+                                        type: 'date'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th >
+                                5. 对抗精神病类药物过敏
+                            </th>
+                            <td >
+                                <label for="item15">是 <input type="radio" id="item15" name="items[dlb][5][radio]"  value="1" <eq name="data[items][dlb][5][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item25">否 <input type="radio" id="item25" name="items[dlb][5][radio]"  value="2" <eq name="data[items][dlb][5][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <th >
+                                6. 姿势不稳
+                            </th>
+                            <td >
+                                <label for="item16">是 <input type="radio" id="item16" name="items[dlb][6][radio]"  value="1" <eq name="data[items][dlb][6][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item26">否 <input type="radio" id="item26" name="items[dlb][6][radio]"  value="2" <eq name="data[items][dlb][6][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;出现的时间
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" name="items[dlb][6][date1]" placeholder="选择时间" id="dlb_data61" value="{$data[items][dlb][6][date1]}">
+                                <script>
+                                    laydate.render({
+                                        elem: '#dlb_data61', //指定元素
+                                        type: 'date'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th >
+                                7. 反复跌倒
+                            </th>
+                            <td >
+                                <label for="item17">是 <input type="radio" id="item17" name="items[dlb][7][radio]"  value="1" <eq name="data[items][dlb][7][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item27">否 <input type="radio" id="item27" name="items[dlb][7][radio]"  value="2" <eq name="data[items][dlb][7][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;出现的时间
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" name="items[dlb][7][date1]" placeholder="选择时间" id="dlb_data71" value="{$data[items][dlb][7][date1]}">
+                                <script>
+                                    laydate.render({
+                                        elem: '#dlb_data71', //指定元素
+                                        type: 'date'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th >
+                                8. 晕厥或短暂发作无法解释的意识丧失
+                            </th>
+                            <td >
+                                <label for="item18">是 <input type="radio" id="item18" name="items[dlb][8][radio]"  value="1" <eq name="data[items][dlb][8][radio]" value="1">checked</eq>  > &nbsp;</label>
+                            </td>
+                            <td >
+                                <label for="item28">否 <input type="radio" id="item28" name="items[dlb][8][radio]"  value="2" <eq name="data[items][dlb][8][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr >
+                            <th >
+                                &nbsp;&nbsp;&nbsp;&nbsp;出现的时间
+                            </th>
+                            <td >
+                                <input type="text" class="form-control" name="items[dlb][8][date1]" placeholder="选择时间" id="dlb_data81" value="{$data[items][dlb][8][date1]}">
+                                <script>
+                                    laydate.render({
+                                        elem: '#dlb_data81', //指定元素
+                                        type: 'date'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+
+                        <for start="9" end="15" name="k">
+                            <tr>
+                                <th >
+                                    <if condition="$k eq 9">
+                                        {$k}. 严重的自主神经功能障碍（如便秘、体位性低血压、尿失禁）
+                                        <elseif condition="$k eq 10"/>
+                                        {$k}. 嗅觉减退
+                                        <elseif condition="$k eq 11"/>
+                                        {$k}. 过度嗜睡
+                                        <elseif condition="$k eq 12"/>
+                                        {$k}. 其它形式的幻觉
+                                        <elseif condition="$k eq 13"/>
+                                        {$k}. 系统性妄想
+                                        <elseif condition="$k eq 14"/>
+                                        {$k}. 淡漠、抑郁或焦虑
+                                    </if>
+                                </th>
+                                <td >
+                                    <label for="item1{$k}">是 <input type="radio" id="item1{$k}" name="items[dlb][{$k}][radio]"  value="1" <eq name="data[items][dlb][$k][radio]" value="1">checked</eq>  > &nbsp;</label>
+                                </td>
+                                <td >
+                                    <label for="item2{$k}">否 <input type="radio" id="item2{$k}" name="items[dlb][{$k}][radio]"  value="2" <eq name="data[items][dlb][$k][radio]" value="2">checked</eq>  >  &nbsp;</label>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </for>
+
+                        <tr>
+                            <th width="50">备注</th>
+                            <td colspan="6">
+                                <textarea class="form-control" style="height: 100px;" name="remark" placeholder="请填写备注">{$data.remark}</textarea>
+                            </td>
+                        </tr>
+                    </table>
+
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit"><empty name="data">{:lang('ADD')}<else/>{:lang('EDIT')}</empty></button>
+                        <a class="btn btn-default" href="{:url('Scale/index',array('user_id'=>$user[id],'inc_type'=>$inc_type))}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#visit_time', //指定元素
+            type: 'datetime'
+        });
+
+    });
+</script>
+</body>
+</html>

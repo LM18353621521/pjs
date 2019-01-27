@@ -191,6 +191,12 @@ class ScaleController extends AdminBaseController
             elseif ($inc_type == "adl") {
                 $data['items'] = unserialize($data['items']);
             }
+            elseif ($inc_type == "dlb") {
+                $data['items'] = unserialize($data['items']);
+            }
+            elseif ($inc_type == "moca") {
+                $data['items'] = unserialize($data['items']);
+            }
         }
 
         if ($inc_type == "mds_updrs") {
@@ -467,6 +473,31 @@ class ScaleController extends AdminBaseController
         elseif ($inc_type == "adl") {
             $items_list = array(
                 '1' => array('name' => '自己搭公共汽车', 'unit' => ''),
+                '2' => array('name' => '到家附近的地方去走走', 'unit' => ''),
+                '3' => array('name' => '自己做饭（包括生火）', 'unit' => ''),
+                '4' => array('name' => '做家务', 'unit' => ''),
+                '5' => array('name' => '吃药 ', 'unit' => ''),
+                '6' => array('name' => '吃饭', 'unit' => ''),
+                '7' => array('name' => '穿脱衣服 ', 'unit' => ''),
+                '8' => array('name' => '梳头、刷牙', 'unit' => ''),
+                '9' => array('name' => '洗自己的衣服', 'unit' => ''),
+                '10' => array('name' => '在平坦的室内走动 ', 'unit' => ''),
+                '11' => array('name' => '上下楼梯', 'unit' => ''),
+                '12' => array('name' => '上下床、坐下或站起', 'unit' => ''),
+                '13' => array('name' => '提水煮饭或洗澡', 'unit' => ''),
+                '14' => array('name' => '洗澡（水已别人放好）', 'unit' => ''),
+                '15' => array('name' => '剪脚趾甲', 'unit' => ''),
+                '16' => array('name' => '逛街，购物', 'unit' => ''),
+                '17' => array('name' => '定时去厕所', 'unit' => ''),
+                '18' => array('name' => '打电话', 'unit' => ''),
+                '19' => array('name' => '处理自己的钱财', 'unit' => ''),
+                '20' => array('name' => '独自在家', 'unit' => ''),
+            );
+            $this->assign('items_list', $items_list);
+        }
+        elseif ($inc_type == "dlb") {
+            $items_list = array(
+                '1' => array('name' => '波动性认知障碍出现的时间', 'unit' => ''),
                 '2' => array('name' => '到家附近的地方去走走', 'unit' => ''),
                 '3' => array('name' => '自己做饭（包括生火）', 'unit' => ''),
                 '4' => array('name' => '做家务', 'unit' => ''),
