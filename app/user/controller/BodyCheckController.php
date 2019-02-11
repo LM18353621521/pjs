@@ -112,11 +112,11 @@ class BodyCheckController extends AdminBaseController
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
                 $res = $model->insert($data);
-                adminLog("添加病史(ID:$res)");
+                adminLog("添加体格检查(ID:$res)");
                 $this->success('添加成功!', url('BodyCheck/index', ['user_id' => $data['user_id']]));
             }else{
                 $res = $model->where(array('id'=>$data['id']))->update($data);
-                adminLog("编辑病史(ID:".$data['id'].")");
+                adminLog("编辑体格检查(ID:".$data['id'].")");
                 $this->success('编辑成功!', url('BodyCheck/index', ['user_id' => $data['user_id']]));
             }
         }
@@ -150,13 +150,13 @@ class BodyCheckController extends AdminBaseController
             $id           = $this->request->param('id', 0, 'intval');
             $result       = $model->where(['id' => $id])->find();
             $model->where(['id'=>$id])->delete();
-            adminLog("删除病史(ID:".$id.")");
+            adminLog("删除体格检查(ID:".$id.")");
             $this->success("删除成功！", '');
         }
         if (isset($param['ids'])) {
             $ids     = $this->request->param('ids/a');
             $result  = $model->where(['id' => ['in', $ids]])->delete();
-            adminLog("删除病史(ID:".implode(",",$ids).")");
+            adminLog("删除体格检查(ID:".implode(",",$ids).")");
             if ($result) {
                 $this->success("删除成功！", '');
             }
