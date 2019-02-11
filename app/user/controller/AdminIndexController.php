@@ -87,16 +87,56 @@ class AdminIndexController extends AdminBaseController
 
         session('where_user_index', $where);
 
-
         $keywordComplex = [];
         $usersQuery = Db::name('user');
 
-        $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(10);
+        $list = $usersQuery->alias('a')->whereOr($keywordComplex)->where($where)
+            ->join('user_visit uv','a.id=uv.user_id','left')
+            ->group('a.id')
+            ->order("a.create_time DESC")
+            ->field('a.*')
+            ->paginate(20);
+
         // 获取分页显示
         $list->appends($request);
         $page = $list->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
+
+        $site_info=cmf_get_option('site_info');
+        $visit_time = time()-$site_info['visit_hour']*60*60;
+        $where = array(
+            'status'=>0,
+            'visit_time'=>array('lt',$visit_time),
+            'u.user_type'=>2,
+        );
+        if ($role_id == 2) {
+            $admin_id = session('ADMIN_ID');
+            $where['admin_id'] = $admin_id;
+        }
+        $visit_num = Db::name('user_visit')->alias('a')
+            ->join('user u','a.user_id=u.id')
+            ->where($where)->count();
+
+
+        if($visit_num>0){
+            $url= "https://openapi.baidu.com/oauth/2.0/token?grant_type=client_credentials&client_id=7hc7IQMDGTAuyuQqRod06BBs&client_secret=UXE4ze6tKbs41zrjflbO39A58IpxPYWf";
+
+            $result=cmf_curl_get($url);
+            $token_info = json_decode($result,true);
+            $token = $token_info['access_token'];
+            $text = "您有".$visit_num."个待访问记录";
+            $url= "http://tsn.baidu.com/text2audio?tex=$text&lan=zh&cuid=***&ctp=1&spd=4&tok=$token";
+            $this->assign('url',$url);
+        }
+        $this->assign('visit_num',$visit_num);
+
+        //设置cookie
+        $visit_tips = $_COOKIE['visit_tips'];
+        if(!$visit_tips){
+            setcookie('visit_tips',100,time()+$site_info['tips_interval']*60);
+        }
+        $this->assign('visit_tips',$visit_tips);
         // 渲染模板输出
         return $this->fetch();
     }
@@ -363,4 +403,50 @@ class AdminIndexController extends AdminBaseController
             $this->error('数据传入失败！');
         }
     }
+
+    /**
+     * 删除数据
+     * @throws \think\Exception
+     */
+    public function delete()
+    {
+        $model = Db::name('user' . $this->inc_type);
+        $param = $this->request->param();
+        if (isset($param['id'])) {
+            $id = $this->request->param('id', 0, 'intval');
+            $result = $model->where(['id' => $id])->find();
+            $model->where(['id' => $id])->delete();
+            adminLog("删除患者(ID:" . $id . ")");
+            $this->success("删除成功！", '');
+        }
+        if (isset($param['ids'])) {
+            $ids = $this->request->param('ids/a');
+            $result = $model->where(['id' => ['in', $ids]])->delete();
+            adminLog("删除患者(ID:" . implode(",", $ids) . ")");
+            if ($result) {
+                $this->success("删除成功！", '');
+            }
+        }
+    }
+
+
+    public function test(){
+        header("Content-type:text/html;charset=utf-8");
+        $url= "https://openapi.baidu.com/oauth/2.0/token?grant_type=client_credentials&client_id=7hc7IQMDGTAuyuQqRod06BBs&client_secret=UXE4ze6tKbs41zrjflbO39A58IpxPYWf";
+
+        $result=cmf_curl_get($url);
+        $token_info = json_decode($result,true);
+        dump($token_info);
+
+        $token = $token_info['access_token'];
+
+        $text = "陆柳芬大笨蛋";
+        $url= "http://tsn.baidu.com/text2audio?tex=$text&lan=zh&cuid=***&ctp=1&tok=$token";
+        $this->assign('url',$url);
+
+        $result=cmf_curl_get($url);
+        $this->assign('res',$result);
+        return $this->fetch();
+    }
+
 }

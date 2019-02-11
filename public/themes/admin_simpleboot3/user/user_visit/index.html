@@ -3,6 +3,21 @@
 <script src="__STATIC__/js/laydate/laydate.js"></script>
 <body>
 <div class="wrap">
+
+    <br>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th width="200">姓名：{$user.user_nickname}</th>
+            <th width="120">编号：{$user.user_code}</th>
+            <th width="100">性别：<if condition="$user.sex eq 1">男<else/>女</if></th>
+            <th width="100">年龄：{$user.age}</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <br>
+
     <ul class="nav nav-tabs">
         <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
         <li class="active"><a href="javascript:;">随访列表</a></li>
@@ -48,6 +63,7 @@
                     <td>第{$vo.visit_times}次</td>
                     <td>{:date('Y-m-d H:i:s',$vo['visit_time'])}</td>
                     <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                    <td>{$vo.remark}</td>
                     <td>
                         <if condition="$vo.status eq 0">
                             未访问
@@ -58,7 +74,7 @@
                         </if>
                     </td>
                     <td>
-                        <a href="{:url('UserVisit/edit',array('id'=>$vo['id']))}">编辑</a>
+                        <a href="{:url('UserVisit/edit',array('id'=>$vo['id'],'user_id'=>$user[id]))}">编辑</a>
                         <a href="{:url('UserVisit/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:lang('DELETE')}</a>
                     </td>
                 </tr>

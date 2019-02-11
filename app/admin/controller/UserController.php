@@ -351,4 +351,44 @@ class UserController extends AdminBaseController
             $this->error('数据传入失败！');
         }
     }
+
+
+    /**
+     * 管理员日志
+     * @return mixed
+     */
+    public function adminlog()
+    {
+        $request = input('request.');
+        $where= array();
+        if (!empty($request['user_nickname'])) {
+            $where['user_nickname'] = ['like', "%".$request['user_nickname']."%"];
+        }
+        if (!empty($request['title'])) {
+            $where['title'] = $request['title'];
+        }
+        if (!empty($request['start_time'])&&!empty($request['end_time'])) {
+            $start_time = strtotime($request['start_time']);
+            $end_time = strtotime($request['end_time'])+86400;
+            $where['log_time'] = array('between',[$start_time,$end_time]);
+        }
+
+        $keywordComplex = [];
+        $usersQuery = Db::name('admin_log');
+
+        $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("log_time DESC")->paginate(30);
+        // 获取分页显示
+        $list->appends($request);
+        $page = $list->render();
+        $this->assign('list', $list);
+        $this->assign('page', $page);
+
+        //
+        $adminList = Db::name('user')->where(array('user_type'=>1))->column('id,user_login,user_nickname');
+        $this->assign('adminList', $adminList);
+
+        // 渲染模板输出
+        return $this->fetch();
+    }
+
 }

@@ -12,14 +12,15 @@
     <ul class="nav nav-tabs">
         <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
         <li class="active"><a href="javascript:;">基本资料</a></li>
-        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
+        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史</a></li>
+        <li><a href="{:url('MajorMedical/index',array('user_id'=>$user[id]))}" >主要病史及症状</a></li>
         <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
         <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
         <li><a href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}" >化验检查</a></li>
-        <li><a href="{:url('CenterDiagnose/index',array('user_id'=>$user[id]))}">中心名称及诊断</a></li>
-        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
-        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
+        <!--<li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>-->
+        <!--<li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>-->
         <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+        <li><a href="{:url('CenterDiagnose/index',array('user_id'=>$user[id]))}">中心名称及诊断</a></li>
     </ul>
     <form class="form-horizontal js-ajax-form margin-top-20" role="form" action="{:url('adminIndex/addPost')}"
           method="post">

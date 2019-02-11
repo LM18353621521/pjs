@@ -100,6 +100,7 @@ class ImageCheckController extends AdminBaseController
         $model = Db::name('user_image_check');
         if ($this->request->isPost()) {
             $data   = $this->request->param();
+            $data['update_time']=time();
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -107,7 +108,6 @@ class ImageCheckController extends AdminBaseController
                 adminLog("添加影像学检查(ID:$res)");
                 $this->success('添加成功!', url('ImageCheck/index', ['user_id' => $data['user_id']]));
             }else{
-                $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑影像学检查(ID:".$data['id'].")");
                 $this->success('编辑成功!', url('ImageCheck/index', ['id' => $res]));

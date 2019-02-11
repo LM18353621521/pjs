@@ -10,14 +10,16 @@
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
-        <li><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
-        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
-        <li class="active"><a href="javascript:;">体格检查</a></li>
+        <li ><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
+        <li ><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史</a></li>
+        <li><a href="{:url('MajorMedical/index',array('user_id'=>$user[id]))}" >主要病史及症状</a></li>
+        <li class="active"><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
         <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
         <li><a href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}" >化验检查</a></li>
-        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
-        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
+        <!--<li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>-->
+        <!--<li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>-->
         <li><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+        <li><a href="{:url('CenterDiagnose/index',array('user_id'=>$user[id]))}">中心名称及诊断</a></li>
     </ul>
     <br>
     <table class="table table-hover table-bordered table-list">
@@ -210,9 +212,60 @@
                             </td>
                         </tr>
                     </table>
+                    <table class="table table-bordered">
+                        <thead>2. 不自主运动</thead>
+                        <tr>
+                            <th width="120">静止性震颤<span class="form-required"></span></th>
+                            <td>
+                                <input type="radio" name="motion[motion1]" value="1" <eq name="data[motion][motion1]" value="1">checked</eq> >头部 &nbsp;&nbsp;
+                                <input type="radio" name="motion[motion1]" value="2" <eq name="data[motion][motion1]" value="2">checked</eq> >左上肢 &nbsp;&nbsp;
+                                <input type="radio" name="motion[motion1]" value="3" <eq name="data[motion][motion1]" value="3">checked</eq> >右上肢 &nbsp;&nbsp;
+                                <input type="radio" name="motion[motion1]" value="4" <eq name="data[motion][motion1]" value="4">checked</eq> >左下肢 &nbsp;&nbsp;
+                                <input type="radio" name="motion[motion1]" value="5" <eq name="data[motion][motion1]" value="5">checked</eq> >右下肢 &nbsp;&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>肌束痉挛<span class="form-required"></span></th>
+                            <td>
+                                <input type="radio" name="motion[motion2]" value="1" <eq name="data[motion][motion2]" value="1">checked</eq> >有 &nbsp;&nbsp;
+                                <input type="radio" name="motion[motion3]" value="2" <eq name="data[motion][motion2]" value="2">checked</eq> >无 &nbsp;&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>异动症<span class="form-required"></span></th>
+                            <td>
+                                <input type="radio" name="motion[motion3]" value="1" <eq name="data[motion][motion3]" value="1">checked</eq> >有 &nbsp;&nbsp;
+                                <input type="radio" name="motion[motion3]" value="2" <eq name="data[motion][motion3]" value="2">checked</eq> >无 &nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered">
+                        <thead>3. 步态异常</thead>
+                        <tr>
+                            <th>步态异常<span class="form-required"></span></th>
+                            <td>
+                                <input type="radio" name="motion[motion4]" value="1" <eq name="data[motion][motion4]" value="1">checked</eq> >有 &nbsp;&nbsp;
+                                <input type="radio" name="motion[motion4]" value="2" <eq name="data[motion][motion4]" value="2">checked</eq> >无 &nbsp;&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>类型<span class="form-required"></span></th>
+                            <td>
+                                <select name="motion[motion5]" >
+                                    <option value="0">请选择</option>
+                                    <option value="1" <eq name="data[motion][motion5]" value="1">selected</eq> >正常</option>
+                                    <option value="2" <eq name="data[motion][motion5]" value="2">selected</eq> >小步态</option>
+                                    <option value="3" <eq name="data[motion][motion5]" value="3">selected</eq> >慌张步态</option>
+                                    <option value="4" <eq name="data[motion][motion5]" value="4">selected</eq> >拖拽步态</option>
+                                    <option value="5" <eq name="data[motion][motion5]" value="5">selected</eq> >冻结步态</option>
+                                    <option value="6" <eq name="data[motion][motion5]" value="6">selected</eq> >共济失调步态</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
 
                     <table class="table table-bordered">
-                        <thead>2. 自主神经</thead>
+                        <thead> 自主神经</thead>
                         <tr>
                             <th>面部油脂增加<span class="form-required"></span></th>
                             <td>

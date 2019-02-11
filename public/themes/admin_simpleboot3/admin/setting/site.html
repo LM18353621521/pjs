@@ -4,11 +4,11 @@
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#A" data-toggle="tab">{:lang('WEB_SITE_INFOS')}</a></li>
-			<li><a href="#B" data-toggle="tab">{:lang('SEO_SETTING')}</a></li>
+			<!--<li><a href="#B" data-toggle="tab">{:lang('SEO_SETTING')}</a></li>-->
 			<!--<li><a href="#C" data-toggle="tab">{:lang('URL_SETTING')}</a></li>-->
 			<!--<li><a href="#E" data-toggle="tab">{:lang('COMMENT_SETTING')}</a></li>-->
-			<li><a href="#F" data-toggle="tab">用户注册设置</a></li>
-			<li><a href="#G" data-toggle="tab">CDN设置</a></li>
+			<!--<li><a href="#F" data-toggle="tab">用户注册设置</a></li>-->
+			<!--<li><a href="#G" data-toggle="tab">CDN设置</a></li>-->
 		</ul>
 		<form class="form-horizontal js-ajax-form margin-top-20" role="form" action="{:url('setting/sitePost')}" method="post">
 			<fieldset>
@@ -90,6 +90,23 @@
 									<textarea class="form-control" id="input-site_analytics" name="options[site_analytics]">{$site_analytics|default=''}</textarea>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label for="input-visit_hour" class="col-sm-2 control-label">随访提醒时间</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="number" class="form-control" id="input-visit_hour" name="options[visit_hour]" value="{$visit_hour|default=''}">
+									<p class="help-block">随访提醒时间，访问前()个小时内提醒</p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="input-tips_interval" class="col-sm-2 control-label">随提醒间隔</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="number" class="form-control" id="input-tips_interval" name="options[tips_interval]" value="{$tips_interval|default=''}">
+									<p class="help-block">随访提醒间隔，距离上一次提醒后多长时间再次提醒，单位：分钟</p>
+								</div>
+							</div>
+
 							<!--<div class="form-group">-->
 								<!--<label for="input-site_copyright" class="col-sm-2 control-label">{:lang('WEBSITE_COPYRIGHT_INFOMATION')}</label>-->
 								<!--<div class="col-md-6 col-sm-10">-->
@@ -121,6 +138,7 @@
 									<textarea class="form-control" id="input-site_seo_description" name="options[site_seo_description]">{$site_seo_description|default=''}</textarea>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">{:lang('SAVE')}</button>

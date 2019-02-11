@@ -62,7 +62,7 @@ class UserVisitController extends AdminBaseController
             $where['user_nickname'] = ['like', "%".$request['user_nickname']."%"];
         }
         if (!empty($request['title'])) {
-            $where['title'] = $request['title'];
+            $where['title'] = array('like','%'.$request['title'].'%');
         }
         if (!empty($request['start_time'])&&!empty($request['end_time'])) {
             $start_time = strtotime($request['start_time']);
@@ -70,6 +70,8 @@ class UserVisitController extends AdminBaseController
             $where['create_time'] = array('between',[$start_time,$end_time]);
         }
         $where['delete_time'] = 0;
+
+        $where['user_id'] = input('user_id');
 
         $keywordComplex = [];
         $usersQuery = Db::name('user_visit');
@@ -122,15 +124,25 @@ class UserVisitController extends AdminBaseController
             $data['admin_id'] = $this->admin_id;
             $data['create_time']=time();
             $data['visit_time']=strtotime($data['visit_time']);
+            $data['content'] = $this->getPostContentAttr($data['content']);
             if($data['id']){
                 $res = Db::name('user_visit')->where(array('id'=>$data['id']))->update($data);
-                $this->success('编辑成功!', url('UserVisit/index', ['id' => $res]));
+                $this->success('编辑成功!', url('UserVisit/index', ['user_id' => $data['user_id']]));
             }else{
                 $res = Db::name('user_visit')->insert($data);
-                $this->success('添加成功!', url('UserVisit/index', ['id' => $res]));
+                $this->success('添加成功!', url('UserVisit/index',['user_id' => $data['user_id']]));
             }
         }
 
+    }
+    /**
+     * post_content 自动转化
+     * @param $value
+     * @return string
+     */
+    public function getPostContentAttr($value)
+    {
+        return cmf_replace_content_file_url(htmlspecialchars_decode($value));
     }
 
     public function edit()

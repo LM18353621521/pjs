@@ -100,6 +100,7 @@ class PdDiseaseController extends AdminBaseController
         $model = Db::name('user_pd_disease');
         if ($this->request->isPost()) {
             $data   = $this->request->param();
+            $data['update_time']=time();
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -107,7 +108,6 @@ class PdDiseaseController extends AdminBaseController
                 adminLog("添加帕金森病情(ID:$res)");
                 $this->success('添加成功!', url('PdDisease/index', ['user_id' => $data['user_id']]));
             }else{
-                $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑帕金森病情(ID:".$data['id'].")");
                 $this->success('编辑成功!', url('PdDisease/index', ['id' => $res]));

@@ -30,6 +30,25 @@ class DrugHistoryController extends AdminBaseController
         $this->user =$user;
         $this->admin_id =session('ADMIN_ID');
         $this->assign('user',$user);
+        $items_list = array(
+            '1' => array('name' => '美多芭（250mg）', 'unit' => ''),
+            '2' => array('name' => '息宁（250mg）', 'unit' => 'g/L'),
+            '3' => array('name' => '森福罗（0.25mg）', 'unit' => '*1012/L'),
+            '4' => array('name' => '森福罗（1mg）', 'unit' => 'mmol/L'),
+            '5' => array('name' => '泰舒达（50mg）', 'unit' => 'mmol/L'),
+            '6' => array('name' => '珂丹（200mg）', 'unit' => 'mmol/L'),
+            '7' => array('name' => '金刚烷胺（100mg）', 'unit' => 'mmol/L'),
+            '8' => array('name' => '金思平（5mg）', 'unit' => 'mmol/L'),
+            '9' => array('name' => '安坦（2mg）', 'unit' => 'ng/ml'),
+            '10' => array('name' => '咪多秕（2mg）', 'unit' => 'pg/ml'),
+            '11' => array('name' => '罗匹尼罗', 'unit' => ' ng/ml'),
+            '12' => array('name' => '雷沙吉兰', 'unit' => 'mmol/L'),
+            '13' => array('name' => '多奈哌齐', 'unit' => 'mmol/L'),
+            '14' => array('name' => '美金刚', 'unit' => 'mmol/L'),
+            '15' => array('name' => '艾斯能', 'unit' => 'U/L'),
+        );
+        $this->assign('items_list',$items_list);
+
     }
 
     /**
@@ -100,6 +119,8 @@ class DrugHistoryController extends AdminBaseController
         $model = Db::name('user_drug_history');
         if ($this->request->isPost()) {
             $data   = $this->request->param();
+            $data['items'] =serialize($data['items']);
+            $data['update_time']=time();
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -107,7 +128,6 @@ class DrugHistoryController extends AdminBaseController
                 adminLog("添加用药史(ID:$res)");
                 $this->success('添加成功!', url('DrugHistory/index', ['user_id' => $data['user_id']]));
             }else{
-                $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑用药史(ID:".$data['id'].")");
                 $this->success('编辑成功!', url('DrugHistory/index', ['id' => $res]));
@@ -124,6 +144,7 @@ class DrugHistoryController extends AdminBaseController
         $model = Db::name('user_drug_history');
         $id = $this->request->param('id', 0, 'intval');
         $data = $model->find($id);
+        $data['items'] = unserialize($data['items']);
         $this->assign('data', $data);
         return $this->fetch();
     }

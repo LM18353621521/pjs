@@ -35,4 +35,7 @@ class IndexController extends RestBaseController
         $this->success("恭喜您,API访问成功!", $data);
     }
 
+
+
+
 }

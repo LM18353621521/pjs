@@ -107,6 +107,7 @@ class AssistCheckController extends AdminBaseController
                     $val = serialize($val);
                 }
             }
+            $data['update_time']=time();
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -114,7 +115,6 @@ class AssistCheckController extends AdminBaseController
                 adminLog("添加辅助检查(ID:$res)");
                 $this->success('添加成功!', url('AssistCheck/index', ['user_id' => $data['user_id']]));
             }else{
-                $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑辅助检查(ID:".$data['id'].")");
                 $this->success('编辑成功!', url('AssistCheck/index',  ['user_id' => $data['user_id']]));

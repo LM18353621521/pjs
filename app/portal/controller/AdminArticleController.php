@@ -159,6 +159,7 @@ class AdminArticleController extends AdminBaseController
         $themeModel        = new ThemeModel();
         $articleThemeFiles = $themeModel->getActionThemeFiles('portal/Article/index');
         $this->assign('article_theme_files', $articleThemeFiles);
+        dump($post);
         $this->assign('post', $post);
         $this->assign('post_categories', $postCategories);
         $this->assign('post_category_ids', $postCategoryIds);
@@ -207,6 +208,8 @@ class AdminArticleController extends AdminBaseController
                     array_push($data['post']['more']['files'], ["url" => $fileUrl, "name" => $data['file_names'][$key]]);
                 }
             }
+
+            dump($data);
 
             $portalPostModel->adminEditArticle($data['post'], $data['post']['categories']);
 

@@ -4,20 +4,26 @@
     .pic-list li {
         margin-bottom: 5px;
     }
+    .form-control{
+        width: 80%;
+        display: inline-block;
+    }
 </style>
 </head>
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
-        <li><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
-        <li><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史及现病史</a></li>
+        <li ><a href="{:url('adminIndex/edit',array('user_id'=>$user[id]))}" >基本资料</a></li>
+        <li ><a href="{:url('MedicalHistory/index',array('user_id'=>$user[id]))}" >既往病史</a></li>
+        <li><a href="{:url('MajorMedical/index',array('user_id'=>$user[id]))}" >主要病史及症状</a></li>
         <li><a href="{:url('BodyCheck/index',array('user_id'=>$user[id]))}" >体格检查</a></li>
         <li><a href="{:url('AssistCheck/index',array('user_id'=>$user[id]))}" >辅助检查</a></li>
         <li><a href="{:url('AssayCheck/index',array('user_id'=>$user[id]))}" >化验检查</a></li>
-        <li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>
-        <li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>
-        <li class="active"><a href="javascript:;">用药史</a></li>
+        <!--<li><a href="{:url('ImageCheck/index',array('user_id'=>$user[id]))}" >影像学检查</a></li>-->
+        <!--<li><a href="{:url('PdDisease/index',array('user_id'=>$user[id]))}" >帕金森基本病情</a></li>-->
+        <li class="active"><a href="{:url('DrugHistory/index',array('user_id'=>$user[id]))}" >用药史</a></li>
+        <li><a href="{:url('CenterDiagnose/index',array('user_id'=>$user[id]))}">中心名称及诊断</a></li>
     </ul>
     <br>
     <ul class="nav nav-tabs" style="display: inline-block;">
@@ -31,29 +37,143 @@
             <div class="col-md-9">
                 <table class="table table-bordered">
                     <tr>
-                        <th width="100">标题<span class="form-required">*</span></th>
+                        <th width="200">标题<span class="form-required">*</span></th>
+                        <td colspan="4">
+                            <input class="form-control" type="text" id="title" name="title"    value="{$data.title}" placeholder="请输入标题"/>
+                        </td>
                         <td>
-                            <input class="form-control" type="text" name="title" id="title" required value="{$data.title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+
+                    <foreach name="items_list" item="vo" key="k">
+                        <tr>
+                            <th rowspan="3" width="160">{$vo.name}<span class="form-required">*</span></th>
+                            <td width="160">
+                                第一次服用时间：
+                                <input class="form-control" type="text" id="first_time{$k}" name="items[{$k}][1]" value="{$data[items][$k][1]}" placeholder="选择时间"/>
+                            </td>
+                            <td width="160">
+                                开始剂量：
+                                <input class="form-control" type="text"  name="items[{$k}][2]" value="{$data[items][$k][2]}" placeholder="请输入"/>mg
+                            </td>
+                            <td width="160">
+                                是否有效：
+                                <select class="form-control" name="items[{$k}][3]">
+                                    <option value="0">请选择</option>
+                                    <option value="1" <eq name="1" value="$data[items][$k][3]">selected</eq> >是</option>
+                                    <option value="2" <eq name="2" value="$data[items][$k][3]">selected</eq> >否</option>
+                                </select>
+                            </td>
+                            <td width="160">
+                                不良反应：
+                                <select class="form-control"  name="items[{$k}][4]">
+                                    <option value="0">请选择</option>
+                                    <option value="1" <eq name="1" value="$data[items][$k][4]">selected</eq> >有</option>
+                                    <option value="2" <eq name="2" value="$data[items][$k][4]">selected</eq> >无</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                是否继续服用：
+                                <select class="form-control" name="items[{$k}][5]">
+                                    <option value="0">请选择</option>
+                                    <option value="1" <eq name="1" value="$data[items][$k][5]">selected</eq> >是</option>
+                                    <option value="2" <eq name="2" value="$data[items][$k][5]">selected</eq> >否</option>
+                                </select>
+                            </td>
+                            <td>
+                                服用剂量：
+                                <input class="form-control" type="text"  name="items[{$k}][6]" value="{$data[items][$k][6]}" placeholder="请输入"/>mg
+                            </td>
+                            <td>
+                                停药时间：
+                                <input class="form-control" type="text" id="stop_time{$k}"  name="items[{$k}][7]" value="{$data[items][$k][7]}"  placeholder="选择时间"/>
+                            </td>
+                            <td>
+                                <script>
+                                    laydate.render({
+                                        elem: '#first_time{$k}', //指定元素
+                                    });
+                                    laydate.render({
+                                        elem: '#stop_time{$k}', //指定元素
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                停药原因：
+                            </td>
+                            <td colspan="3"><textarea class="form-control"  name="items[{$k}][remark]" style="height: 80px;"  placeholder="请输入">{$data[items][$k][remark]}</textarea></td>
+                        </tr>
+                    </foreach>
+                    <tr>
+                        <th rowspan="3" width="160">其他: <br>
+                            <input class="form-control" type="text"  name="items[other][0]" value="{$data[items][other][0]}" placeholder="请输入药品名称"/>
+                        </th>
+                        <td width="160">
+                            第一次服用时间：
+                            <input class="form-control" type="text" id="first_time_other" name="items[other][1]" value="{$data[items][other][1]}" placeholder="选择时间"/>
+                        </td>
+                        <td width="160">
+                            开始剂量：
+                            <input class="form-control" type="text"  name="items[other][2]" value="{$data[items][other][2]}" placeholder="请输入"/>mg
+                        </td>
+                        <td width="160">
+                            是否有效：
+                            <select class="form-control" name="items[other][3]">
+                                <option value="0">请选择</option>
+                                <option value="1" <eq name="1" value="$data[items][other][3]">selected</eq> >是</option>
+                                <option value="2" <eq name="2" value="$data[items][other][3]">selected</eq> >否</option>
+                            </select>
+                        </td>
+                        <td width="160">
+                            不良反应：
+                            <select class="form-control" name="items[other][4]">
+                                <option value="0">请选择</option>
+                                <option value="1" <eq name="1" value="$data[items][other][4]">selected</eq> >有</option>
+                                <option value="2" <eq name="2" value="$data[items][other][4]">selected</eq> >无</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
-                        <th width="100">随访时间<span class="form-required">*</span></th>
                         <td>
-                            <input class="form-control" type="text" name="visit_time" id="visit_time" required   value="{:date('Y-m-d H:i:s',$data['visit_time'])}" placeholder="请选择随访时间"/>
+                            是否继续服用：
+                            <select class="form-control" name="items[other][5]">
+                                <option value="0">请选择</option>
+                                <option value="1" <eq name="1" value="$data[items][other][5]">selected</eq> >是</option>
+                                <option value="2" <eq name="2" value="$data[items][other][5]">selected</eq> >否</option>
+                            </select>
+                        </td>
+                        <td>
+                            服用剂量：
+                            <input class="form-control" type="text"  name="items[other][6]" value="{$data[items][other][6]}" placeholder="请输入"/>mg
+                        </td>
+                        <td>
+                            停药时间：
+                            <input class="form-control" type="text" id="stop_time_other"  name="items[other][7]" value="{$data[items][other][7]}"  placeholder="选择时间"/>
+                        </td>
+                        <td>
+                            <script>
+                                laydate.render({
+                                    elem: '#first_time_other', //指定元素
+                                });
+                                laydate.render({
+                                    elem: '#stop_time_other', //指定元素
+                                });
+                            </script>
                         </td>
                     </tr>
                     <tr>
-                        <th>备注</th>
                         <td>
-                            <textarea class="form-control" name="remark" style="height: 80px;"  placeholder="请填写备注">{$data.remark}</textarea>
+                            停药原因：
                         </td>
+                        <td colspan="3"><textarea class="form-control"  name="items[{$k}][remark]" style="height: 80px;"  placeholder="请输入">{$data[items][$k][remark]}</textarea></td>
                     </tr>
-                    <tr>
-                        <th>内容</th>
-                        <td>
-                            <script type="text/plain" id="content" name="content"></script>
-                        </td>
-                    </tr>
+
+
+
                 </table>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">

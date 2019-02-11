@@ -16,7 +16,6 @@ class UserController extends RestBaseController
     {
 
 
-
     }
 
 }

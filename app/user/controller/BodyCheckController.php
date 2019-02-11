@@ -107,6 +107,7 @@ class BodyCheckController extends AdminBaseController
                     $val = serialize($val);
                 }
             }
+            $data['update_time']=time();
             if(empty($data['id'])){
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time']=time();
@@ -114,7 +115,6 @@ class BodyCheckController extends AdminBaseController
                 adminLog("添加病史(ID:$res)");
                 $this->success('添加成功!', url('BodyCheck/index', ['user_id' => $data['user_id']]));
             }else{
-                $data['update_time']=time();
                 $res = $model->where(array('id'=>$data['id']))->update($data);
                 adminLog("编辑病史(ID:".$data['id'].")");
                 $this->success('编辑成功!', url('BodyCheck/index', ['user_id' => $data['user_id']]));
@@ -133,6 +133,7 @@ class BodyCheckController extends AdminBaseController
         $data = $model->find($id);
         $data['sign'] = unserialize($data['sign']);
         $data['nerve'] = unserialize($data['nerve']);
+        $data['motion'] = unserialize($data['motion']);
         $this->assign('data', $data);
         return $this->fetch();
     }

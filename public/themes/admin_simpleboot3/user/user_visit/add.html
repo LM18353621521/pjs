@@ -8,6 +8,20 @@
 </head>
 <body>
 <div class="wrap js-check-wrap">
+    <br>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th width="200">姓名：{$user.user_nickname}</th>
+            <th width="120">编号：{$user.user_code}</th>
+            <th width="100">性别：<if condition="$user.sex eq 1">男<else/>女</if></th>
+            <th width="100">年龄：{$user.age}</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <br>
+
     <ul class="nav nav-tabs">
         <li><a href="{:url('AdminIndex/index')}">患者列表</a></li>
         <li ><a href="{:url('UserVisit/index',array('user_id'=>$user[id]))}">随访列表</a></li>

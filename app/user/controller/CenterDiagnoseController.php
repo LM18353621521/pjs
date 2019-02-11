@@ -108,6 +108,7 @@ class CenterDiagnoseController extends AdminBaseController
                     $val = serialize($val);
                 }
             }
+            $data['update_time'] = time();
             if (empty($data['id'])) {
                 $data['admin_id'] = $this->admin_id;
                 $data['create_time'] = time();
@@ -115,7 +116,6 @@ class CenterDiagnoseController extends AdminBaseController
                 adminLog("添加中心名称及诊断(ID:$res)");
                 $this->success('添加成功!', url('CenterDiagnose/index', ['user_id' => $data['user_id']]));
             } else {
-                $data['update_time'] = time();
                 $res = $model->where(array('id' => $data['id']))->update($data);
                 adminLog("编辑中心名称及诊断(ID:" . $data['id'] . ")");
                 $this->success('编辑成功!', url('CenterDiagnose/index', ['user_id' => $data['user_id']]));
