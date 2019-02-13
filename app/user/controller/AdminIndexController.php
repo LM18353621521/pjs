@@ -104,7 +104,7 @@ class AdminIndexController extends AdminBaseController
         $this->assign('page', $page);
 
         $site_info=cmf_get_option('site_info');
-        $visit_time = time()-$site_info['visit_hour']*60*60;
+        $visit_time = time()+$site_info['visit_hour']*60*60;
         $where = array(
             'status'=>0,
             'visit_time'=>array('lt',$visit_time),

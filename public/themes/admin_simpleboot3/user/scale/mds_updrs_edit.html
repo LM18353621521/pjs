@@ -46,14 +46,22 @@
             <div class="col-md-9">
                 <table class="table table-bordered">
                     <thead>所有评分项目均记为：0,1,2,3,4<br></thead>
+
+                    <tr>
+                        <th width="100">标题<span class="form-required">*</span></th>
+                        <td colspan="3">
+                            <input class="form-control" type="text" name="title" required value="{$data.title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+
                     <tr>
                         <th width="100">姓名：<span class="form-required">*</span></th>
                         <td>
                             <input class="form-control" type="text" name="user_name" required value="{$data.user_name}" placeholder="请输入"/>
                         </td>
-                        <th width="100">性别：<span class="form-required">*</span></th>
+                        <th width="100">性别：<span class="form-required"></span></th>
                         <td>
-                            <select class="form-control" name="user_sex" required>
+                            <select class="form-control" name="user_sex" >
                                 <option value="1"  <eq name="data[user_sex]" value="1">selected</eq> >男</option>
                                 <option value="2"  <eq name="data[user_sex]" value="2">selected</eq> >女</option>
                             </select>
@@ -61,13 +69,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <th width="100">门诊号：<span class="form-required">*</span></th>
+                        <th width="100">门诊号：<span class="form-required"></span></th>
                         <td>
-                            <input class="form-control" type="text" name="clinic_num"  value="{$data.clinic_num}" placeholder="请输入"/>
+                            <input class="form-control" type="text" name="clinic_num"   value="{$data.clinic_num}" placeholder="请输入"/>
                         </td>
-                        <th width="100">评估日期：<span class="form-required">*</span></th>
+                        <th width="100">评估日期：<span class="form-required"></span></th>
                         <td>
-                            <input class="form-control" type="text" name="valuation_date" id="date"  value="{$data.valuation_date}" placeholder="请输入"/>
+                            <input class="form-control" type="text" name="valuation_date" id="date"   value="{$data.valuation_date}" placeholder="请输入"/>
                         </td>
                     </tr>
                     <tr>
@@ -806,13 +814,19 @@
                             </td>
                         </tr>
                     </table>
-
+                    <tr>
+                        <th width="50">评分</th>
+                        <td colspan="6">
+                            <input class="form-control" name="score" value="{$data.score}" placeholder="请输入评分"/>
+                        </td>
+                    </tr>
                 </table>
 
 
 
 
                 </table>
+                <br><br>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary js-ajax-submit"><empty name="data">{:lang('ADD')}<else/>{:lang('EDIT')}</empty></button>

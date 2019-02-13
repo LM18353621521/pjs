@@ -45,7 +45,7 @@
                 <th>{:lang('REGISTRATION_TIME')}</th>
                 <!--<th>{:lang('LAST_LOGIN_TIME')}</th>-->
                 <!--<th>{:lang('LAST_LOGIN_IP')}</th>-->
-                <th>{:lang('STATUS')}</th>
+                <!--<th>{:lang('STATUS')}</th>-->
                 <th>{:lang('ACTIONS')}</th>
             </tr>
             </thead>
@@ -66,7 +66,7 @@
                     <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
                     <!--<td>{:date('Y-m-d H:i:s',$vo['last_login_time'])}</td>-->
                     <!--<td>{$vo.last_login_ip}</td>-->
-                    <td>{$user_statuses[$vo['user_status']]}</td>
+                    <!--<td>{$user_statuses[$vo['user_status']]}</td>-->
                     <td>
                         <a href="{:url('adminIndex/edit',array('user_id'=>$vo['id']))}">编辑资料</a>
                         <a href="{:url('Scale/index',array('user_id'=>$vo['id']))}">编辑问卷</a>

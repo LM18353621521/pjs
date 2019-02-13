@@ -162,12 +162,11 @@
                                 <label for="item49">3：经常有      <input type="radio" id="item49" name="items[psqi][9]"  value="4" <eq name="data[items][psqi][9]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
                             </th>
                         </tr>
-
                         <tr>
-                            <th width="50">备注</th>
-                            <td colspan="6">
-                                <textarea class="form-control" style="height: 100px;" name="remark" placeholder="请填写备注">{$data.remark}</textarea>
-                            </td>
+                            <th width="50">评分：<input class="form-control" name="score" value="{$data.score}" placeholder="请输入评分"/></th>
+                        </tr>
+                        <tr>
+                            <th width="50">备注：<textarea class="form-control" style="height: 100px;" name="remark" placeholder="请填写备注">{$data.remark}</textarea></th>
                         </tr>
                     </table>
 

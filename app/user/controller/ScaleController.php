@@ -81,7 +81,10 @@ class ScaleController extends AdminBaseController
         $keywordComplex = [];
         $usersQuery = Db::name('scale_' . $this->inc_type);
 
-        $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(15);
+        $list = $usersQuery->alias('a')
+            ->join('user u','a.admin_id=u.id','left')
+            ->field('a.*,u.user_login as user_nickname')
+            ->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(15);
         // 获取分页显示
         $list->appends($request);
         $page = $list->render();
@@ -199,7 +202,6 @@ class ScaleController extends AdminBaseController
                 $data['items'] = unserialize($data['items']);
             }
         }
-        dump($data);
 
         if ($inc_type == "mds_updrs") {
         } elseif ($inc_type == "sc_en") {

@@ -1825,7 +1825,7 @@ function getAccessToken(){
 
 function get_visit_num($user_id){
     $site_info=cmf_get_option('site_info');
-    $visit_time = time()-$site_info['visit_hour']*60*60;
+    $visit_time = time()+$site_info['visit_hour']*60*60;
     $where = array(
         'status'=>0,
         'visit_time'=>array('lt',$visit_time),

@@ -55,16 +55,18 @@
                     <table class="table table-bordered">
                         <foreach name="items_list" item="vo" key="k">
                             <tr>
-                                <th width="80">
+                                <th width="180">
                                     {$k}、{$vo.name}
                                 </th>
                                 <td width="20"><input type="radio" name="items[sc][$k]"  value="1" <eq name="data[items][sc][$k]" value="1">checked</eq>  > &nbsp;&nbsp;</td>
-                                <td width="20"><input type="radio" name="items[sc][$k]"  value="2" <eq name="data[items][sc][$k]" value="2">checked</eq>  > &nbsp;&nbsp;</td>
-                                <td width="20"><input type="radio" name="items[sc][$k]"  value="3" <eq name="data[items][sc][$k]" value="3">checked</eq>  > &nbsp;&nbsp;</td>
-
                             </tr>
                         </foreach>
-
+                        <tr>
+                            <th width="50">评分</th>
+                            <td colspan="2">
+                                <input class="form-control" name="score" value="{$data.score}" placeholder="请输入评分"/>
+                            </td>
+                        </tr>
                         <tr>
                             <th>备注</th>
                             <td colspan="2">
