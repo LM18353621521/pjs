@@ -76,7 +76,7 @@
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
-                            <tr>
+                            <tr class="score_tr">
                                 <th >
                                     {$k}、{$vo.name}
                                 </th>
@@ -84,32 +84,31 @@
                                     <label for="item2{$k}">1 <input type="radio" id="item2{$k}" name="items[npi][{$k}][1]"  value="1" <eq name="data[items][npi][$k][1]" value="1">checked</eq>  > </label>
                                     <label for="item1{$k}">0 <input type="radio" id="item1{$k}" name="items[npi][{$k}][1]"  value="2" <eq name="data[items][npi][$k][1]" value="2">checked</eq>  >  &nbsp;</label>
                                 </td>
-                                <td><input type="text" class="form-control"  name="items[npi][{$k}][2]"  value="{$data[items][npi][$k][2]}"></td>
-                                <td><input type="text" class="form-control"  name="items[npi][{$k}][3]"  value="{$data[items][npi][$k][3]}"></td>
-                                <td><input type="text" class="form-control"  name="items[npi][{$k}][4]"  value="{$data[items][npi][$k][4]}"></td>
-                                <td><input type="text" class="form-control"  name="items[npi][{$k}][5]"  value="{$data[items][npi][$k][5]}"></td>
+                                <td><input type="text" class="form-control score1"  name="items[npi][{$k}][2]"  value="{$data[items][npi][$k][2]}"></td>
+                                <td><input type="text" class="form-control score2"  name="items[npi][{$k}][3]"  value="{$data[items][npi][$k][3]}"></td>
+                                <td><input type="text" class="form-control score3"  name="items[npi][{$k}][4]"  value="{$data[items][npi][$k][4]}"></td>
+                                <td><input type="text" class="form-control score4"  name="items[npi][{$k}][5]"  value="{$data[items][npi][$k][5]}"></td>
                                 <td></td>
                             </tr>
                         </foreach>
-
                             <tr>
                                 <th >
                                     总分
                                 </th>
                                 <td >
                                 </td>
-                                <td><input type="text" class="form-control"  name="items[npi][t2]"  value="{$data[items][npi][t2]}"></td>
-                                <td><input type="text" class="form-control"  name="items[npi][t3]"  value="{$data[items][npi][t3]}"></td>
-                                <td><input type="text" class="form-control"  name="items[npi][t4]"  value="{$data[items][npi][t4]}"></td>
-                                <td><input type="text" class="form-control"  name="items[npi][t5]"  value="{$data[items][npi][t5]}"></td>
+                                <td><input type="text" class="form-control t1"  name="score1"  value="{$data[score1]}"></td>
+                                <td><input type="text" class="form-control t2"  name="score2"  value="{$data[score2]}"></td>
+                                <td><input type="text" class="form-control t3"  name="score3"  value="{$data[score3]}"></td>
+                                <td><input type="text" class="form-control t4"  name="score4"  value="{$data[score4]}"></td>
                                 <td></td>
                             </tr>
-                        <tr>
-                            <th width="50">评分</th>
-                            <td colspan="6">
-                                <input class="form-control" name="score" value="{$data.score}" placeholder="请输入评分"/>
-                            </td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<th width="50">评分</th>-->
+                            <!--<td colspan="6">-->
+                                <!--<input class="form-control" name="score" value="{$data.score}" placeholder="请输入评分"/>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                         <tr>
                             <th width="50">备注</th>
                             <td colspan="6">
@@ -157,7 +156,48 @@
             type: 'datetime'
         });
 
+        $('.score1,.score2').keyup(function(){
+            var score1 = $(this).parents('tr').find('.score1').val();
+            var score2 = $(this).parents('tr').find('.score2').val();
+            score1=score1?parseFloat(score1):0;
+            score2=score2?parseFloat(score2):0;
+            $(this).parents('tr').find('.score3').val(score1+score2);
+            count_score();
+        });
+
+        $('.score3,.score4').keyup(function(){
+            count_score();
+        });
+
     });
+    function count_score(){
+        var t1=t2=t3=t4=0;
+        $(".score1").each(function(){
+            var score =$(this).val();
+            score=score?parseFloat(score):0;
+            t1+=score;
+        });
+        $(".score2").each(function(){
+            var score =$(this).val();
+            score=score?parseFloat(score):0;
+            t2+=score;
+        });
+        $(".score3").each(function(){
+            var score =$(this).val();
+            score=score?parseFloat(score):0;
+            t3+=score;
+        });
+        $(".score4").each(function(){
+            var score =$(this).val();
+            score=score?parseFloat(score):0;
+            t4+=score;
+        });
+        $('.t1').val(t1);
+        $('.t2').val(t2);
+        $('.t3').val(t3);
+        $('.t4').val(t4);
+    }
+
 </script>
 </body>
 </html>

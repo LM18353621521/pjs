@@ -53,18 +53,26 @@
                     </tr>
 
                     <table class="table table-bordered">
+                        <tr>
+                            <th>活动度</th>
+                            <th>表现</th>
+                        </tr>
                         <foreach name="items_list" item="vo" key="k">
                             <tr>
-                                <th width="180">
-                                    {$k}、{$vo.name}
+                                <th width="30">
+                                    {$k}%
+                                    &nbsp;&nbsp;
+                                <input type="radio" class="redio_sel" name="items[sc][$k]"  value="1"  score="{$k}"  <eq name="data[items][sc][$k]" value="1">checked</eq>  > &nbsp;&nbsp;
                                 </th>
-                                <td width="20"><input type="radio" name="items[sc][$k]"  value="1" <eq name="data[items][sc][$k]" value="1">checked</eq>  > &nbsp;&nbsp;</td>
+                                <th width="180">
+                                    {$vo.name}
+                                </th>
                             </tr>
                         </foreach>
                         <tr>
                             <th width="50">评分</th>
                             <td colspan="2">
-                                <input class="form-control" name="score" value="{$data.score}" placeholder="请输入评分"/>
+                                <input class="form-control" style="width: 100px;" name="score" value="{$data.score}" placeholder="请输入评分"/>%
                             </td>
                         </tr>
                         <tr>
@@ -113,6 +121,12 @@
         laydate.render({
             elem: '#visit_time', //指定元素
             type: 'datetime'
+        });
+
+
+        $('.redio_sel').change(function(){
+            var score1 = $(this).attr('score');
+            $('input[name=score]').val(score1);
         });
 
     });

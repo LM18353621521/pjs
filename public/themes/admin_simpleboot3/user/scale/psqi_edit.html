@@ -52,7 +52,11 @@
                         </td>
                     </tr>
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table_score">
+                        <thead>
+                        下面一些问题是关于您最近一个月的睡眠状况，请填写或选择出最符合您实际情况的答案。
+                        <br><br>
+                        </thead>
                         <tr>
                             <th width="820" >
                                 1、 近1个月，晚上上床睡觉时间通常是 <input type="text" name="items[psqi][1]"  value="{$data[items][psqi][1]}"> 点钟。
@@ -65,10 +69,10 @@
                         </tr>
                         <tr>
                             <th >
-                                <label for="item12">0：≤15min     <input type="radio" id="item12" name="items[psqi][2]"  value="1" <eq name="data[items][psqi][2]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item22">1：16~30min <input type="radio" id="item22" name="items[psqi][2]"  value="2" <eq name="data[items][psqi][2]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item32">2：31~60min <input type="radio" id="item32" name="items[psqi][2]"  value="3" <eq name="data[items][psqi][2]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item42">3：≥60min     <input type="radio" id="item42" name="items[psqi][2]"  value="4" <eq name="data[items][psqi][2]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item12">0：≤15min     <input type="radio" id="item12" name="items[psqi][2]"  value="0" <eq name="data[items][psqi][2]" value="0">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item22">1：16~30min <input type="radio" id="item22" name="items[psqi][2]"  value="1" <eq name="data[items][psqi][2]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item32">2：31~60min <input type="radio" id="item32" name="items[psqi][2]"  value="2" <eq name="data[items][psqi][2]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item42">3：≥60min     <input type="radio" id="item42" name="items[psqi][2]"  value="3" <eq name="data[items][psqi][2]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
                             </th>
                         </tr>
 
@@ -97,10 +101,10 @@
                             </tr>
                             <tr style="padding-left: 30px !important;">
                                 <th >
-                                    <label for="item1{$k}">0：无            <input type="radio" id="item1{$k}" name="items[psqi][5][{$k}]"  value="1" <eq name="data[items][psqi][5][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
-                                    <label for="item2{$k}">1：<1次/周   <input type="radio" id="item2{$k}" name="items[psqi][5][{$k}]"  value="2" <eq name="data[items][psqi][5][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
-                                    <label for="item3{$k}">2：1~2次/周 <input type="radio" id="item3{$k}" name="items[psqi][5][{$k}]"  value="3" <eq name="data[items][psqi][5][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
-                                    <label for="item4{$k}">3：≧3次/周    <input type="radio" id="item4{$k}" name="items[psqi][5][{$k}]"  value="4" <eq name="data[items][psqi][5][$k]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                                    <label for="item1{$k}">0：无            <input type="radio" id="item1{$k}" name="items[psqi][5][{$k}]"  value="0" <eq name="data[items][psqi][5][$k]" value="0">checked</eq>  >  &nbsp;&nbsp;</label>
+                                    <label for="item2{$k}">1：<1次/周   <input type="radio" id="item2{$k}" name="items[psqi][5][{$k}]"  value="1" <eq name="data[items][psqi][5][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                    <label for="item3{$k}">2：1~2次/周 <input type="radio" id="item3{$k}" name="items[psqi][5][{$k}]"  value="2" <eq name="data[items][psqi][5][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                    <label for="item4{$k}">3：≧3次/周    <input type="radio" id="item4{$k}" name="items[psqi][5][{$k}]"  value="3" <eq name="data[items][psqi][5][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
                                 </th>
                             </tr>
                         </foreach>
@@ -117,10 +121,10 @@
                         </tr>
                         <tr>
                             <th >
-                                <label for="item16">0：很好       <input type="radio" id="item16" name="items[psqi][6]"  value="1" <eq name="data[items][psqi][6]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item26">1：很好       <input type="radio" id="item26" name="items[psqi][6]"  value="2" <eq name="data[items][psqi][6]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item36">2：较差       <input type="radio" id="item36" name="items[psqi][6]"  value="3" <eq name="data[items][psqi][6]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item46">3：很差       <input type="radio" id="item46" name="items[psqi][6]"  value="4" <eq name="data[items][psqi][6]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item16">0：很好       <input type="radio" id="item16" name="items[psqi][6]"  value="0" <eq name="data[items][psqi][6]" value="0">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item26">1：很好       <input type="radio" id="item26" name="items[psqi][6]"  value="1" <eq name="data[items][psqi][6]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item36">2：较差       <input type="radio" id="item36" name="items[psqi][6]"  value="2" <eq name="data[items][psqi][6]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item46">3：很差       <input type="radio" id="item46" name="items[psqi][6]"  value="3" <eq name="data[items][psqi][6]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
                             </th>
                         </tr>
                         <tr>
@@ -130,10 +134,10 @@
                         </tr>
                         <tr>
                             <th >
-                                <label for="item17">0：无       <input type="radio" id="item17" name="items[psqi][7]"  value="1" <eq name="data[items][psqi][7]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item27">1：<1次/周        <input type="radio" id="item27" name="items[psqi][7]"  value="2" <eq name="data[items][psqi][7]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item37">2：1~2次/周       <input type="radio" id="item37" name="items[psqi][7]"  value="3" <eq name="data[items][psqi][7]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item47">3：≧3次/周       <input type="radio" id="item47" name="items[psqi][7]"  value="4" <eq name="data[items][psqi][7]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item17">0：无       <input type="radio" id="item17" name="items[psqi][7]"  value="0" <eq name="data[items][psqi][7]" value="0">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item27">1：<1次/周        <input type="radio" id="item27" name="items[psqi][7]"  value="1" <eq name="data[items][psqi][7]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item37">2：1~2次/周       <input type="radio" id="item37" name="items[psqi][7]"  value="2" <eq name="data[items][psqi][7]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item47">3：≧3次/周       <input type="radio" id="item47" name="items[psqi][7]"  value="3" <eq name="data[items][psqi][7]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
                             </th>
                         </tr>
                         <tr>
@@ -143,10 +147,10 @@
                         </tr>
                         <tr>
                             <th >
-                                <label for="item18">0：无      <input type="radio" id="item18" name="items[psqi][8]"  value="1" <eq name="data[items][psqi][8]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item28">1：<1次/周        <input type="radio" id="item28" name="items[psqi][8]"  value="2" <eq name="data[items][psqi][8]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item38">2：1~2次/周        <input type="radio" id="item38" name="items[psqi][8]"  value="3" <eq name="data[items][psqi][8]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item48">3：≧3次/周       <input type="radio" id="item48" name="items[psqi][8]"  value="4" <eq name="data[items][psqi][8]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item18">0：无      <input type="radio" id="item18" name="items[psqi][8]"  value="0" <eq name="data[items][psqi][8]" value="0">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item28">1：<1次/周        <input type="radio" id="item28" name="items[psqi][8]"  value="1" <eq name="data[items][psqi][8]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item38">2：1~2次/周        <input type="radio" id="item38" name="items[psqi][8]"  value="2" <eq name="data[items][psqi][8]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item48">3：≧3次/周       <input type="radio" id="item48" name="items[psqi][8]"  value="3" <eq name="data[items][psqi][8]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
                             </th>
                         </tr>
                         <tr>
@@ -156,10 +160,10 @@
                         </tr>
                         <tr>
                             <th >
-                                <label for="item19">0：没有      <input type="radio" id="item19" name="items[psqi][9]"  value="1" <eq name="data[items][psqi][9]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item29">1：偶尔有      <input type="radio" id="item29" name="items[psqi][9]"  value="2" <eq name="data[items][psqi][9]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item39">2：有时有      <input type="radio" id="item39" name="items[psqi][9]"  value="3" <eq name="data[items][psqi][9]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
-                                <label for="item49">3：经常有      <input type="radio" id="item49" name="items[psqi][9]"  value="4" <eq name="data[items][psqi][9]" value="4">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item19">0：没有      <input type="radio" id="item19" name="items[psqi][9]"  value="0" <eq name="data[items][psqi][9]" value="0">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item29">1：偶尔有      <input type="radio" id="item29" name="items[psqi][9]"  value="1" <eq name="data[items][psqi][9]" value="1">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item39">2：有时有      <input type="radio" id="item39" name="items[psqi][9]"  value="2" <eq name="data[items][psqi][9]" value="2">checked</eq>  >  &nbsp;&nbsp;</label>
+                                <label for="item49">3：经常有      <input type="radio" id="item49" name="items[psqi][9]"  value="3" <eq name="data[items][psqi][9]" value="3">checked</eq>  >  &nbsp;&nbsp;</label>
                             </th>
                         </tr>
                         <tr>
@@ -207,6 +211,16 @@
         laydate.render({
             elem: '#visit_time', //指定元素
             type: 'datetime'
+        });
+
+        $('.table_score input[type=radio]').change(function(){
+            var t1=0;
+            $(".table_score tr").each(function(){
+                var score =$(this).find("input[type='radio']:checked").val();
+                score=score?parseFloat(score):0;
+                t1+=score;
+                $('input[name=score]').val(t1);
+            });
         });
 
     });

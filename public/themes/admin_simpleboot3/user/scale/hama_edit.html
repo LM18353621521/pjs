@@ -53,6 +53,13 @@
                     </tr>
 
                     <table class="table table-bordered">
+                        <thead>
+                        请在下表中符合近1周来您具有的身心症状的分数后打勾：
+                        <br>
+                        0-无症状    1-轻微    2-中等    3-较重    4-严重
+                        <br><br>
+                        </thead>
+
                         <tr>
                             <th width="420" style="text-align: center">
                                 圈出最适合病人情况的分数
@@ -65,15 +72,15 @@
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
-                            <tr>
+                            <tr class="score_tr">
                                 <th >
                                     {$k}、{$vo.name}
                                 </th>
-                                <td ><label for="mmse1{$k}">0 <input type="radio" id="mmse1{$k}" name="items[hama][{$k}]"  value="1" <eq name="data[items][hama][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse2{$k}">1 <input type="radio" id="mmse2{$k}" name="items[hama][{$k}]"  value="2" <eq name="data[items][hama][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse3{$k}">2 <input type="radio" id="mmse3{$k}" name="items[hama][{$k}]"  value="3" <eq name="data[items][hama][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse4{$k}">3 <input type="radio" id="mmse4{$k}" name="items[hama][{$k}]"  value="4" <eq name="data[items][hama][$k]" value="4">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse5{$k}">4 <input type="radio" id="mmse5{$k}" name="items[hama][{$k}]"  value="5" <eq name="data[items][hama][$k]" value="5">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                <td ><label for="mmse1{$k}">0 <input type="radio" class="redio_sel" id="mmse1{$k}" name="items[hama][{$k}]"  value="0" <eq name="data[items][hama][$k]" value="0">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                <td ><label for="mmse2{$k}">1 <input type="radio" class="redio_sel" id="mmse2{$k}" name="items[hama][{$k}]"  value="1" <eq name="data[items][hama][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                <td ><label for="mmse3{$k}">2 <input type="radio" class="redio_sel" id="mmse3{$k}" name="items[hama][{$k}]"  value="2" <eq name="data[items][hama][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                <td ><label for="mmse4{$k}">3 <input type="radio" class="redio_sel" id="mmse4{$k}" name="items[hama][{$k}]"  value="3" <eq name="data[items][hama][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                <td ><label for="mmse5{$k}">4 <input type="radio" class="redio_sel" id="mmse5{$k}" name="items[hama][{$k}]"  value="4" <eq name="data[items][hama][$k]" value="4">checked</eq>  >  &nbsp;&nbsp;</label></td>
                                 <td></td>
                             </tr>
                         </foreach>
@@ -128,6 +135,16 @@
         laydate.render({
             elem: '#visit_time', //指定元素
             type: 'datetime'
+        });
+
+        $('.redio_sel').change(function(){
+            var t1=0;
+            $(".score_tr").each(function(){
+                var score =$(this).find("input[type='radio']:checked").val();
+                score=score?parseFloat(score):0;
+                t1+=score;
+                $('input[name=score]').val(t1);
+            });
         });
 
     });

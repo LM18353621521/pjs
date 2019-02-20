@@ -53,6 +53,12 @@
                     </tr>
 
                     <table class="table table-bordered">
+                        <thead>
+                        问题1-8： 无=3分；   轻微=2分；   一些=1分；   非常=0分；
+                        <br>
+                        问题9-14：无=0分；   轻微=1分；   一些=2分；   非常=3分
+                        <br><br>
+                        </thead>
                         <tr>
                             <th width="420" style="text-align: center">
                                 圈出最适合病人情况的分数
@@ -65,20 +71,20 @@
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
-                            <tr>
+                            <tr class="score_tr">
                                 <th >
                                     {$k}、{$vo.name}
                                 </th>
                                 <if condition="$k elt 8">
-                                    <td ><label for="item1{$k}">3分 <input type="radio" id="item1{$k}" name="items[hama][{$k}]"  value="1" <eq name="data[items][hama][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                    <td ><label for="item2{$k}">2分 <input type="radio" id="item2{$k}" name="items[hama][{$k}]"  value="2" <eq name="data[items][hama][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                    <td ><label for="item3{$k}">1分 <input type="radio" id="item3{$k}" name="items[hama][{$k}]"  value="3" <eq name="data[items][hama][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                    <td ><label for="item4{$k}">0分 <input type="radio" id="item4{$k}" name="items[hama][{$k}]"  value="4" <eq name="data[items][hama][$k]" value="4">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item1{$k}">3分 <input type="radio" class="redio_sel"  id="item1{$k}" name="items[hama][{$k}]"  value="3" <eq name="data[items][hama][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item2{$k}">2分 <input type="radio" class="redio_sel"  id="item2{$k}" name="items[hama][{$k}]"  value="2" <eq name="data[items][hama][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item3{$k}">1分 <input type="radio" class="redio_sel"  id="item3{$k}" name="items[hama][{$k}]"  value="1" <eq name="data[items][hama][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item4{$k}">0分 <input type="radio" class="redio_sel"  id="item4{$k}" name="items[hama][{$k}]"  value="0" <eq name="data[items][hama][$k]" value="0">checked</eq>  >  &nbsp;&nbsp;</label></td>
                                     <else/>
-                                    <td ><label for="item1{$k}">0分 <input type="radio" id="item1{$k}" name="items[hama][{$k}]"  value="1" <eq name="data[items][hama][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                    <td ><label for="item2{$k}">1分 <input type="radio" id="item2{$k}" name="items[hama][{$k}]"  value="2" <eq name="data[items][hama][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                    <td ><label for="item3{$k}">2分 <input type="radio" id="item3{$k}" name="items[hama][{$k}]"  value="3" <eq name="data[items][hama][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label></td>
-                                    <td ><label for="item4{$k}">3分 <input type="radio" id="item4{$k}" name="items[hama][{$k}]"  value="4" <eq name="data[items][hama][$k]" value="4">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item1{$k}">0分 <input type="radio" class="redio_sel"  id="item1{$k}" name="items[hama][{$k}]"  value="0" <eq name="data[items][hama][$k]" value="0">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item2{$k}">1分 <input type="radio" class="redio_sel"  id="item2{$k}" name="items[hama][{$k}]"  value="1" <eq name="data[items][hama][$k]" value="1">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item3{$k}">2分 <input type="radio" class="redio_sel"  id="item3{$k}" name="items[hama][{$k}]"  value="2" <eq name="data[items][hama][$k]" value="2">checked</eq>  >  &nbsp;&nbsp;</label></td>
+                                    <td ><label for="item4{$k}">3分 <input type="radio" class="redio_sel"  id="item4{$k}" name="items[hama][{$k}]"  value="3" <eq name="data[items][hama][$k]" value="3">checked</eq>  >  &nbsp;&nbsp;</label></td>
                                 </if>
                                 <td></td>
                             </tr>
@@ -134,6 +140,16 @@
         laydate.render({
             elem: '#visit_time', //指定元素
             type: 'datetime'
+        });
+
+        $('.redio_sel').change(function(){
+            var t1=0;
+            $(".score_tr").each(function(){
+                var score =$(this).find("input[type='radio']:checked").val();
+                score=score?parseFloat(score):0;
+                t1+=score;
+                $('input[name=score]').val(t1);
+            });
         });
 
     });

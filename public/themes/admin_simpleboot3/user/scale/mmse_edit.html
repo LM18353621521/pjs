@@ -53,6 +53,12 @@
                     </tr>
 
                     <table class="table table-bordered">
+                        <thead>
+                        下面是检查认知智力功能的一些问题，请直接向被试者询问，
+                        <br>
+                        并根据被试者的实际表现和回答结果进行选择（1、正确    0、错误    ）。
+                        <br><br>
+                        </thead>
                         <tr>
                             <th width="420" style="text-align: center">
                                 症状
@@ -62,12 +68,12 @@
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
-                            <tr>
+                            <tr class="score_tr">
                                 <th >
                                     {$k}、{$vo.name}
                                 </th>
-                                <td ><label for="mmse1{$k}"><input type="radio" id="mmse1{$k}" name="items[mmse][{$k}]"  value="1" <eq name="data[items][mmse][$k]" value="1">checked</eq>  > 正确 &nbsp;&nbsp;</label></td>
-                                <td ><label for="mmse2{$k}"><input type="radio" id="mmse2{$k}" name="items[mmse][{$k}]"  value="2" <eq name="data[items][mmse][$k]" value="2">checked</eq>  > 错误 &nbsp;&nbsp;</label></td>
+                                <td ><label for="mmse1{$k}"><input class="redio_sel" type="radio" id="mmse1{$k}" name="items[mmse][{$k}]"  value="1" <eq name="data[items][mmse][$k]" value="1">checked</eq>  > 正确 &nbsp;&nbsp;</label></td>
+                                <td ><label for="mmse2{$k}"><input class="redio_sel" type="radio" id="mmse2{$k}" name="items[mmse][{$k}]"  value="0" <eq name="data[items][mmse][$k]" value="0">checked</eq>  > 错误 &nbsp;&nbsp;</label></td>
                                 <td></td>
                             </tr>
                         </foreach>
@@ -123,6 +129,17 @@
         laydate.render({
             elem: '#visit_time', //指定元素
             type: 'datetime'
+        });
+
+
+        $('.redio_sel').change(function(){
+            var t1=0;
+            $(".score_tr").each(function(){
+                var score =$(this).find("input[type='radio']:checked").val();
+                score=score?parseFloat(score):0;
+                t1+=score;
+                $('input[name=score]').val(t1);
+            });
         });
 
     });

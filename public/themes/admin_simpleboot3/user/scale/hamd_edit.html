@@ -62,13 +62,13 @@
                             <!--<td></td>-->
                         <!--</tr>-->
                         <foreach name="items_list" item="vo" key="k">
-                            <tr>
+                            <tr class="score_tr">
                                 <th width="420">
                                     {$k}、{$vo.name}
                                 </th>
                                 <td >
                                 <for start="0" end="$vo[unit]" name="i">
-                                    <label for="hamd{$k}{$i}">{$i}=<input type="radio" id="hamd{$k}{$i}" name="items[mmse][{$k}{$i}]"  value="1" <eq name="data[items][mmse][$k.$i]" value="1">checked</eq>  > &nbsp;&nbsp;</label>
+                                    <label for="hamd{$k}{$i}">{$i}=<input type="radio" class="redio_sel" score="{$i}" id="hamd{$k}{$i}" name="items[mmse][{$k}]"  value="{$i}" <eq name="data[items][mmse][$k]|default='8'" value="$i">checked</eq>  > &nbsp;&nbsp;</label>
                                 </for>
                                 </td>
                                 <td></td>
@@ -126,6 +126,19 @@
             elem: '#visit_time', //指定元素
             type: 'datetime'
         });
+
+
+        $('.redio_sel').change(function(){
+            var score1 = $(this).attr('score');
+            var t1=0;
+            $(".score_tr").each(function(){
+                var score =$(this).find("input[type='radio']:checked").val();
+                score=score?parseFloat(score):0;
+                t1+=score;
+                $('input[name=score]').val(t1);
+            });
+        });
+
 
     });
 </script>

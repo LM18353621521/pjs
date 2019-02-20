@@ -69,24 +69,24 @@
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
-                            <tr>
+                            <tr class="score_tr">
                                 <th >
                                     {$k}、{$vo.name}
                                 </th>
                                 <td >
-                                    <label for="item1{$k}">1 <input type="radio" id="item1{$k}" name="items[npi][{$k}]"  value="1" <eq name="data[items][npi][$k]" value="1">checked</eq>  > &nbsp;</label>
+                                    <label for="item1{$k}">1 <input type="radio" class="redio_sel"   id="item1{$k}" name="items[npi][{$k}]"  value="1" <eq name="data[items][npi][$k]" value="1">checked</eq>  > &nbsp;</label>
                                 </td>
                                 <td >
-                                    <label for="item2{$k}">2 <input type="radio" id="item2{$k}" name="items[npi][{$k}]"  value="2" <eq name="data[items][npi][$k]" value="2">checked</eq>  >  &nbsp;</label>
+                                    <label for="item2{$k}">2 <input type="radio" class="redio_sel"   id="item2{$k}" name="items[npi][{$k}]"  value="2" <eq name="data[items][npi][$k]" value="2">checked</eq>  >  &nbsp;</label>
                                 </td>
                                 <td >
-                                    <label for="item3{$k}">3 <input type="radio" id="item3{$k}" name="items[npi][{$k}]"  value="3" <eq name="data[items][npi][$k]" value="3">checked</eq>  > &nbsp;</label>
+                                    <label for="item3{$k}">3 <input type="radio" class="redio_sel"   id="item3{$k}" name="items[npi][{$k}]"  value="3" <eq name="data[items][npi][$k]" value="3">checked</eq>  > &nbsp;</label>
                                 </td>
                                 <td >
-                                    <label for="item4{$k}">4 <input type="radio" id="item4{$k}" name="items[npi][{$k}]"  value="4" <eq name="data[items][npi][$k]" value="4">checked</eq>  >  &nbsp;</label>
+                                    <label for="item4{$k}">4 <input type="radio" class="redio_sel"   id="item4{$k}" name="items[npi][{$k}]"  value="4" <eq name="data[items][npi][$k]" value="4">checked</eq>  >  &nbsp;</label>
                                 </td>
                                 <td >
-                                    <label for="item5{$k}">5 <input type="radio" id="item5{$k}" name="items[npi][{$k}]"  value="5" <eq name="data[items][npi][$k]" value="5">checked</eq>  > &nbsp;</label>
+                                    <label for="item5{$k}">5 <input type="radio" class="redio_sel"   id="item5{$k}" name="items[npi][{$k}]"  value="5" <eq name="data[items][npi][$k]" value="5">checked</eq>  > &nbsp;</label>
                                 </td>
                                 <td></td>
                             </tr>
@@ -143,6 +143,17 @@
             elem: '#visit_time', //指定元素
             type: 'datetime'
         });
+
+        $('.redio_sel').change(function(){
+            var t1=0;
+            $(".score_tr").each(function(){
+                var score =$(this).find("input[type='radio']:checked").val();
+                score=score?parseFloat(score):0;
+                t1+=score;
+                $('input[name=score]').val(t1);
+            });
+        });
+
 
     });
 </script>
