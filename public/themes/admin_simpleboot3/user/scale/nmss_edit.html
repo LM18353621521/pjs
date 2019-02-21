@@ -67,19 +67,19 @@
                             <th width="420" style="text-align: center">
                                 症状
                             </th>
-                            <td width="20">是&nbsp;&nbsp;</td>
-                            <td width="20">前&nbsp;&nbsp;</td>
-                            <td width="20">否&nbsp;&nbsp;</td>
+                            <td width="20">是=2&nbsp;&nbsp;</td>
+                            <td width="20">前=1&nbsp;&nbsp;</td>
+                            <td width="20">否=0&nbsp;&nbsp;</td>
                             <td></td>
                         </tr>
                         <foreach name="items_list" item="vo" key="k">
-                            <tr>
+                            <tr class="score_tr">
                                 <th width="320">
                                     {$k}、{$vo.name}
                                 </th>
-                                <td width="20"><input type="radio" name="items[sc][{$k}]"  value="1" <eq name="data[items][sc][$k]" value="1">checked</eq>  > &nbsp;&nbsp;</td>
-                                <td width="20"><input type="radio" name="items[sc][{$k}]"  value="2" <eq name="data[items][sc][$k]" value="2">checked</eq>  > &nbsp;&nbsp;</td>
-                                <td width="20"><input type="radio" name="items[sc][{$k}]"  value="3" <eq name="data[items][sc][$k]" value="3">checked</eq>  > &nbsp;&nbsp;</td>
+                                <td width="20"><input type="radio" class="redio_sel" name="items[sc][{$k}]"  value="2" <eq name="data[items][sc][$k]" value="2">checked</eq>  > &nbsp;&nbsp;</td>
+                                <td width="20"><input type="radio" class="redio_sel" name="items[sc][{$k}]"  value="1" <eq name="data[items][sc][$k]" value="1">checked</eq>  > &nbsp;&nbsp;</td>
+                                <td width="20"><input type="radio" class="redio_sel" name="items[sc][{$k}]"  value="0" <eq name="data[items][sc][$k]" value="0">checked</eq>  > &nbsp;&nbsp;</td>
                                 <td></td>
                             </tr>
                         </foreach>
@@ -134,6 +134,16 @@
         laydate.render({
             elem: '#visit_time', //指定元素
             type: 'datetime'
+        });
+
+        $('.redio_sel').change(function(){
+            var t1=0;
+            $(".score_tr").each(function(){
+                var score =$(this).find("input[type='radio']:checked").val();
+                score=score?parseFloat(score):0;
+                t1+=score;
+                $('input[name=score]').val(t1);
+            });
         });
 
     });

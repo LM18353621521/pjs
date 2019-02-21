@@ -161,7 +161,8 @@
             var score2 = $(this).parents('tr').find('.score2').val();
             score1=score1?parseFloat(score1):0;
             score2=score2?parseFloat(score2):0;
-            $(this).parents('tr').find('.score3').val(score1+score2);
+            $(this).parents('tr').find('.score3').val(score1*score2);
+
             count_score();
         });
 

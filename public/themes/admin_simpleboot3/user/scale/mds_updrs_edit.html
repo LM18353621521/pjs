@@ -54,20 +54,20 @@
                         </td>
                     </tr>
 
-                    <!--<tr>-->
-                        <!--<th width="100">姓名：<span class="form-required">*</span></th>-->
-                        <!--<td>-->
-                            <!--<input class="form-control" type="text" name="user_name" required value="{$data.user_name}" placeholder="请输入"/>-->
-                        <!--</td>-->
-                        <!--<th width="100">性别：<span class="form-required"></span></th>-->
-                        <!--<td>-->
-                            <!--<select class="form-control" name="user_sex" >-->
-                                <!--<option value="1"  <eq name="data[user_sex]" value="1">selected</eq> >男</option>-->
-                                <!--<option value="2"  <eq name="data[user_sex]" value="2">selected</eq> >女</option>-->
-                            <!--</select>-->
-                        <!--</td>-->
-                        <!--</td>-->
-                    <!--</tr>-->
+                    <tr>
+                        <th width="100">姓名：<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text"  readonly required value="{$user.user_nickname}" placeholder="请输入"/>
+                        </td>
+                        <th width="100">性别：<span class="form-required"></span></th>
+                        <td>
+                            <select class="form-control" >
+                                <option value="1"  <eq name="user[sex]" value="1">selected</eq> >男</option>
+                                <option value="2"  <eq name="user[sex]" value="2">selected</eq> >女</option>
+                            </select>
+                        </td>
+                        </td>
+                    </tr>
                     <tr>
                         <th width="100">门诊号：<span class="form-required"></span></th>
                         <td>

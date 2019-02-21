@@ -381,11 +381,11 @@
                             </tr>
                             <tr>
                                 <th>其他疾病<span class="form-required"></span></th>
-                                <td>
-                                    <foreach name="poisonList" item="vo" key="k">
-                                        <input type="checkbox" name="user_info[family][other_disease][{$k}]" value="{$k}">{$vo} &nbsp;&nbsp;
-                                    </foreach>
-                                    <input type="text" name="user_info[family][other_disease][other]" value="">
+                                <td colspan="3">
+                                    <!--<foreach name="poisonList" item="vo" key="k">-->
+                                        <!--<input type="checkbox" name="user_info[family][other_disease][{$k}]" value="{$k}">{$vo} &nbsp;&nbsp;-->
+                                    <!--</foreach>-->
+                                    <input type="text"   class="form-control" style="width: 80%" name="user_info[family][other_disease][other]" value="">
                                 </td>
                             </tr>
                         </table>
