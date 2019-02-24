@@ -73,17 +73,18 @@
                             </td>
                         </tr>
 
+
                         <table class="table table-bordered">
                             <thead>初步诊断：</thead>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o11]"  value="1" <eq name="data[old_diagnose][o11]" value="1">checked</eq>  >帕金森病（PD）：&nbsp;&nbsp;
+                                    <input type="checkbox" name="pd_o"  value="1" <eq name="data[pd_o]" value="1">checked</eq>  >帕金森病（PD）：&nbsp;&nbsp;
                                     Hoehn-Yahr:<input type="text" class="form-control w_60" name="old_diagnose[o12]"  value="{$data[old_diagnose][o12]}">&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o21]"  value="1" <eq name="data[old_diagnose][o21]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    <input type="checkbox" name="pds_o"  value="1" <eq name="data[pds_o]" value="1">checked</eq>  >&nbsp;&nbsp;
                                     继发性帕金森综合征（PDS）:<input type="text" class="form-control w_60" name="old_diagnose[o22]"  value="{$data[old_diagnose][o22]}">&nbsp;&nbsp;
                                 </td>
                             </tr>
@@ -101,33 +102,33 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o41]"  value="1" <eq name="data[old_diagnose][o41]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    <input type="checkbox" name="hpds_o"  value="1" <eq name="data[hpds_o]" value="1">checked</eq>  >&nbsp;&nbsp;
                                     遗传代谢性相关PD（HPDS）：<input type="text" class="form-control w_60" name="old_diagnose[o42]"  value="{$data[old_diagnose][o42]}">&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o51]"  value="1" <eq name="data[old_diagnose][o51]" value="1">checked</eq>  >MSA&nbsp;&nbsp;
+                                    <input type="checkbox" name="msa_o"  value="1" <eq name="data[msa_o]" value="1">checked</eq>  >MSA&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o61]"  value="1" <eq name="data[old_diagnose][o61]" value="1">checked</eq>  >PSP&nbsp;&nbsp;
+                                    <input type="checkbox" name="psp_o"  value="1" <eq name="data[psp_o]" value="1">checked</eq>  >PSP&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o71]"  value="1" <eq name="data[old_diagnose][o71]" value="1">checked</eq>  >CBD/CBS&nbsp;&nbsp;
+                                    <input type="checkbox" name="cbd_cbs_o"  value="1" <eq name="data[cbd_cbs_o]" value="1">checked</eq>  >CBD/CBS&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o81]"  value="1" <eq name="data[old_diagnose][o81]" value="1">checked</eq>  >DLB&nbsp;&nbsp;
+                                    <input type="checkbox" name="dlb_o"  value="1" <eq name="data[dlb_o]" value="1">checked</eq>  >DLB&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="old_diagnose[o91]"  value="1" <eq name="data[old_diagnose][o91]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    <input type="checkbox" name="n_pd_o"  value="1" <eq name="data[n_pd_o]" value="1">checked</eq>  >&nbsp;&nbsp;
                                     不典型帕金森综合征：<input type="text" class="form-control w_60" name="old_diagnose[o92]"  value="{$data[old_diagnose][o92]}">&nbsp;&nbsp;
                                 </td>
                             </tr>
@@ -136,13 +137,13 @@
                             <thead>修正诊断：</thead>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n11]"  value="1" <eq name="data[new_diagnose][n11]" value="1">checked</eq>  >帕金森病（PD）：&nbsp;&nbsp;
+                                    <input type="checkbox" name="pd_n"  value="1" <eq name="data[pd_n]" value="1">checked</eq>  >帕金森病（PD）：&nbsp;&nbsp;
                                     Hoehn-Yahr:<input type="text" class="form-control w_60" name="new_diagnose[n12]"  value="{$data[new_diagnose][n12]}">&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n21]"  value="1" <eq name="data[new_diagnose][n21]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    <input type="checkbox" name="pds_n"  value="1" <eq name="data[pds_n]" value="1">checked</eq>  >&nbsp;&nbsp;
                                     继发性帕金森综合征（PDS）:<input type="text" class="form-control w_60" name="new_diagnose[n22]"  value="{$data[new_diagnose][n22]}">&nbsp;&nbsp;
                                 </td>
                             </tr>
@@ -160,33 +161,33 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n41]"  value="1" <eq name="data[new_diagnose][n41]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    <input type="checkbox" name="hpds_n"  value="1" <eq name="data[hpds_n]" value="1">checked</eq>  >&nbsp;&nbsp;
                                     遗传代谢性相关PD（HPDS）：<input type="text" class="form-control w_60" name="new_diagnose[n42]"  value="{$data[new_diagnose][n42]}">&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n51]"  value="1" <eq name="data[new_diagnose][n51]" value="1">checked</eq>  >MSA&nbsp;&nbsp;
+                                    <input type="checkbox" name="msa_n"  value="1" <eq name="data[msa_n]" value="1">checked</eq>  >MSA&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n61]"  value="1" <eq name="data[new_diagnose][n61]" value="1">checked</eq>  >PSP&nbsp;&nbsp;
+                                    <input type="checkbox" name="psd_n"  value="1" <eq name="data[psd_n]" value="1">checked</eq>  >PSP&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n71]"  value="1" <eq name="data[new_diagnose][n71]" value="1">checked</eq>  >CBD/CBS&nbsp;&nbsp;
+                                    <input type="checkbox" name="cbd_cbs_n"  value="1" <eq name="data[cbd_cbs_n]" value="1">checked</eq>  >CBD/CBS&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n81]"  value="1" <eq name="data[new_diagnose][n81]" value="1">checked</eq>  >DLB&nbsp;&nbsp;
+                                    <input type="checkbox" name="dlb_n"  value="1" <eq name="data[dlb_n]" value="1">checked</eq>  >DLB&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="new_diagnose[n91]"  value="1" <eq name="data[new_diagnose][n91]" value="1">checked</eq>  >&nbsp;&nbsp;
+                                    <input type="checkbox" name="n_pd_n"  value="1" <eq name="data[n_pd_n]" value="1">checked</eq>  >&nbsp;&nbsp;
                                     不典型帕金森综合征：<input type="text" class="form-control w_60" name="new_diagnose[n92]"  value="{$data[new_diagnose][n92]}">&nbsp;&nbsp;
                                 </td>
                             </tr>

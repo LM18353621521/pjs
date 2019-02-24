@@ -73,10 +73,26 @@ class AdminIndexController extends AdminBaseController
         if (!empty($request['mobile'])) {
             $where['mobile'] = $request['mobile'];
         }
+
+        if (!empty($request['check_o'])) {
+            $where['cd.'.$request['check_o']] = 1;
+        }
+
+        if (!empty($request['check_n'])) {
+            $where["cd.".$request['check_n']] = 1;
+        }
+
+
+
+        if (!empty($request['center_name'])) {
+            $where['cd.center_name'] = array('like','%'.$request['center_name'].'%');
+        }
+
+
         if (!empty($request['start_time']) && !empty($request['end_time'])) {
             $start_time = strtotime($request['start_time']);
             $end_time = strtotime($request['end_time']) + 86400;
-            $where['create_time'] = array('between', [$start_time, $end_time]);
+            $where['a.create_time'] = array('between', [$start_time, $end_time]);
         }
 
         $role_id = session('ADMIN_ROLE_ID');
@@ -92,6 +108,7 @@ class AdminIndexController extends AdminBaseController
 
         $list = $usersQuery->alias('a')->whereOr($keywordComplex)->where($where)
             ->join('user_visit uv','a.id=uv.user_id','left')
+            ->join('user_center_diagnose cd','a.id=cd.user_id','left')
             ->group('a.id')
             ->order("a.create_time DESC")
             ->field('a.*')

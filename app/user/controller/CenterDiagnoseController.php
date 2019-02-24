@@ -102,7 +102,6 @@ class CenterDiagnoseController extends AdminBaseController
         $model = Db::name('user_center_diagnose');
         if ($this->request->isPost()) {
             $data = $this->request->param();
-
             foreach ($data as &$val) {
                 if (is_array($val)) {
                     $val = serialize($val);
@@ -116,6 +115,26 @@ class CenterDiagnoseController extends AdminBaseController
                 adminLog("添加中心名称及诊断(ID:$res)");
                 $this->success('添加成功!', url('CenterDiagnose/index', ['user_id' => $data['user_id']]));
             } else {
+                $updata = array(
+                    'pd_o'=>0,
+                    'pds_o'=>0,
+                    'hpds_o'=>0,
+                    'msa_o'=>0,
+                    'psp_o'=>0,
+                    'cbd_cbs_o'=>0,
+                    'dlb_o'=>0,
+                    'n_pd_o'=>0,
+                    'pd_n'=>0,
+                    'pds_n'=>0,
+                    'hpds_n'=>0,
+                    'msa_n'=>0,
+                    'psp_n'=>0,
+                    'cbd_cbs_n'=>0,
+                    'dlb_n'=>0,
+                    'n_pd_n'=>0,
+                );
+                $res0 = $model->where(array('id' => $data['id']))->update($updata);
+
                 $res = $model->where(array('id' => $data['id']))->update($data);
                 adminLog("编辑中心名称及诊断(ID:" . $data['id'] . ")");
                 $this->success('编辑成功!', url('CenterDiagnose/index', ['user_id' => $data['user_id']]));

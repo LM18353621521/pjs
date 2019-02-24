@@ -9,7 +9,7 @@
     </ul>
     <form class="well form-inline margin-top-20" method="post" action="{:url('user/adminIndex/index')}">
         患者姓名：
-        <input class="form-control" type="text" name="user_nickname" style="width: 200px;" value="{:input('request.user_nickname')}"
+        <input class="form-control" type="text" name="user_nickname" style="width: 100px;" value="{:input('request.user_nickname')}"
                placeholder="请输入姓名">
         性别：
         <select class="form-control" name="sex" >
@@ -18,12 +18,38 @@
             <option value="2" <eq name=":input('request.sex')" value="2">selected</eq> >女</option>
         </select>
         年龄：
-        <input class="form-control" type="number" name="age" style="width: 200px;" value="{:input('request.age')}"
+        <input class="form-control" type="number" name="age" style="width: 100px;" value="{:input('request.age')}"
                placeholder="请输入年龄">
         手机号：
-        <input class="form-control" type="number" name="mobile" style="width: 200px;" value="{:input('request.mobile')}"
-               placeholder="请输入年龄">
-        用户ID：
+        <input class="form-control" type="number" name="mobile" style="width: 150px;" value="{:input('request.mobile')}"
+               placeholder="请输入手机号">
+        中心名称：
+        <input class="form-control" type="text" name="center_name" style="width: 200px;" value="{:input('request.center_name')}"
+               placeholder="请输入中心名称">
+        初步诊断：
+        <select class="form-control" name="check_o" id="">
+            <option value="0">请选择</option>
+            <option value="pd_o"  <eq name=":input('request.check_o')" value="pd_o">selected</eq> >帕金森病</option>
+            <option value="pds_o" <eq name=":input('request.check_o')" value="pds_o">selected</eq> >继发性帕金森综合征</option>
+            <option value="hpds_o" <eq name=":input('request.check_o')" value="hpds_o">selected</eq> > 遗传代谢性相关PD</option>
+            <option value="msa_o" <eq name=":input('request.check_o')" value="msa_o">selected</eq> >MSA </option>
+            <option value="psp_o" <eq name=":input('request.check_o')" value="psp_o">selected</eq> >PSP  </option>
+            <option value="cbd_cbs_o" <eq name=":input('request.check_o')" value="cbd_cbs_o">selected</eq> >CBD/CBS  </option>
+            <option value="dlb_o" <eq name=":input('request.check_o')" value="dlb_o">selected</eq> >DLB  </option>
+            <option value="n_pd_o" <eq name=":input('request.check_o')" value="n_pd_o">selected</eq> > 不典型帕金森综合征</option>
+        </select>
+        修正诊断：
+        <select class="form-control" name="check_n" id="">
+            <option value="0">请选择</option>
+            <option value="pd_n" <eq name=":input('request.check_n')" value="pd_n">selected</eq> >帕金森病</option>
+            <option value="pds_n" <eq name=":input('request.check_n')" value="pds_n">selected</eq> >继发性帕金森综合征</option>
+            <option value="hpds_n" <eq name=":input('request.check_n')" value="hpds_n">selected</eq> > 遗传代谢性相关PD</option>
+            <option value="msa_n" <eq name=":input('request.check_n')" value="msa_n">selected</eq> >MSA </option>
+            <option value="psp_n" <eq name=":input('request.check_n')" value="psp_n">selected</eq> >PSP  </option>
+            <option value="cbd_cbs_n" <eq name=":input('request.check_n')" value="cbd_cbs_n">selected</eq> >CBD/CBS  </option>
+            <option value="dlb_n" <eq name=":input('request.check_n')" value="dlb_n">selected</eq> >DLB  </option>
+            <option value="n_pd_n" <eq name=":input('request.check_n')" value="n_pd_n">selected</eq> > 不典型帕金森综合征</option>
+        </select>
         录入时间：
         <input class="form-control" type="text" name="start_time" id="start_time"    value="{:input('request.start_time')}" placeholder="开始时间"/>
         <input class="form-control" type="text" name="end_time" id="end_time"    value="{:input('request.end_time')}" placeholder="结束时间"/>
@@ -92,14 +118,15 @@
          position: relative;
      }
     .visit span{
-        min-width: 20px;
+        min-width: 25px;
         position: absolute;
         border: 1px solid red;
         border-radius: 50%;
         top: -16px;
         right: 0px;
         text-align: center;
-        color: red;
+        color: #FFF;
+        background-color: red;
     }
 
     

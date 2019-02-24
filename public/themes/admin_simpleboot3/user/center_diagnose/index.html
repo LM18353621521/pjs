@@ -68,6 +68,7 @@
                 <th>患者编号</th>
                 <th>患者姓名</th>
                 <th>标题</th>
+                <th>中心名称</th>
                 <th>更新时间</th>
                 <th>创建时间</th>
                 <!--<th>备注</th>-->
@@ -88,6 +89,7 @@
                     <td>{$user.user_code}</td>
                     <td>{$user[user_nickname]}</td>
                     <td>{$vo.title}</td>
+                    <td>{$vo.center_name}</td>
                     <td>{:date('Y-m-d H:i:s',$vo['update_time'])}</td>
                     <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
                     <!--<td>{$vo['remark']}</td>-->
